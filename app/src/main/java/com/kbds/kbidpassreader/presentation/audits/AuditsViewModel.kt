@@ -1,9 +1,9 @@
-package com.kbds.kbidpassreader.presentation.qr
+package com.kbds.kbidpassreader.presentation.audits
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 
-class QRCodeViewModel @ViewModelInject constructor(
+class AuditsViewModel @ViewModelInject constructor(
 ) : ViewModel() {
 
 }

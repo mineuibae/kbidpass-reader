@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph"
-    app:startDestination="@id/usersFragment">
+    app:startDestination="@id/qrCodeFragment">
 
     <fragment
         android:id="@+id/editUserFragment"
         android:name="com.kbds.kbidpassreader.presentation.edituser.EditUserFragment"
         android:label="EditUserFragment" />
+
     <fragment
         android:id="@+id/usersFragment"
         android:name="com.kbds.kbidpassreader.presentation.users.UsersFragment"
@@ -15,6 +16,7 @@
             android:id="@+id/action_usersFragment_to_addUserFragment"
             app:destination="@id/addUserFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/addUserFragment"
         android:name="com.kbds.kbidpassreader.presentation.adduser.AddUserFragment"
@@ -23,4 +25,15 @@
             android:id="@+id/action_addUserFragment_to_usersFragment"
             app:destination="@id/usersFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/qrCodeFragment"
+        android:name="com.kbds.kbidpassreader.presentation.qr.QRCodeFragment"
+        android:label="QRCodeFragment" />
+
+    <fragment
+        android:id="@+id/auditsFragment"
+        android:name="com.kbds.kbidpassreader.presentation.audits.AuditsFragment"
+        android:label="AuditsFragment" />
+
 </navigation>
