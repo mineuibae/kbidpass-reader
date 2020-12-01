@@ -1,83 +1,47 @@
 package com.kbds.kbidpassreader.data.source
 
 import androidx.annotation.NonNull
-import com.kbds.kbidpassreader.logs.domain.model.Logs
-import com.kbds.kbidpassreader.users.domain.model.User
+import androidx.lifecycle.LiveData
+import com.kbds.kbidpassreader.data.Response
+import com.kbds.kbidpassreader.domain.model.Audit
+import com.kbds.kbidpassreader.domain.model.User
 
 interface KBIdPassDataSource {
 
-    interface LoadUsersCallback {
-        fun onUsersLoaded(users: List<User>)
-        fun onDataNotAvailable()
-    }
+    fun observeUsers() : LiveData<Response<List<User>>>
 
-    interface GetUserCallback {
-        fun onUserLoaded(user: User)
-        fun onDataNotAvailable()
-    }
+    fun observeUser(@NonNull id: String) : LiveData<Response<User>>
 
-    fun getUsers(@NonNull callback: LoadUsersCallback)
+    suspend fun getUsers() : Response<List<User>>
 
-    fun getUser(@NonNull id: String, @NonNull callback: GetUserCallback)
+    suspend fun getUser(@NonNull id: String) : Response<User>
 
-    fun addUser(@NonNull user: User)
+    suspend fun addUser(@NonNull user: User)
 
-    fun deleteUser(@NonNull user: User)
+    suspend fun deleteUser(@NonNull user: User)
 
-    fun updateUser(@NonNull user: User)
+    suspend fun updateUser(@NonNull user: User)
+
+    suspend fun registerUser(@NonNull user: User)
+
+    suspend fun deRegisterUser(@NonNull user: User)
+
+    suspend fun refreshUsers()
+
+    suspend fun refreshUser(@NonNull id: String)
 
 
-    interface LoadLogsCallback {
-        fun onLogsLoaded(logs: List<Logs>)
-        fun onDataNotAvailable()
-    }
+    fun observeAudits() : LiveData<Response<List<Audit>>>
 
-    interface GetLogsCallback {
-        fun onLogLoaded(log: Logs)
-        fun onDataNotAvailable()
-    }
+    fun observeAudit(@NonNull id: Int) : LiveData<Response<Audit>>
 
-    fun getLogs(@NonNull callback: LoadLogsCallback)
+    fun observeAuditsFromUser(@NonNull user_id: String) : LiveData<Response<List<Audit>>>
 
-    fun getLog(@NonNull callback: GetLogsCallback)
+    suspend fun getAudits() : Response<List<Audit>>
 
-    fun addLog(@NonNull logs: Logs)
+    suspend fun getAudit(@NonNull id: Int) : Response<Audit>
 
-    /*
-    interface LoadTasksCallback {
+    suspend fun getAuditsFromUser(@NonNull user_id: String) : Response<List<Audit>>
 
-        void onTasksLoaded(List<Task> tasks);
-
-        void onDataNotAvailable();
-    }
-
-    interface GetTaskCallback {
-
-        void onTaskLoaded(Task task);
-
-        void onDataNotAvailable();
-    }
-
-    void getTasks(@NonNull LoadTasksCallback callback);
-
-    void getTask(@NonNull String taskId, @NonNull GetTaskCallback callback);
-
-    void saveTask(@NonNull Task task);
-
-    void completeTask(@NonNull Task task);
-
-    void completeTask(@NonNull String taskId);
-
-    void activateTask(@NonNull Task task);
-
-    void activateTask(@NonNull String taskId);
-
-    void clearCompletedTasks();
-
-    void refreshTasks();
-
-    void deleteAllTasks();
-
-    void deleteTask(@NonNull String taskId);
-     */
+    suspend fun addAudit(@NonNull audit: Audit)
 }
