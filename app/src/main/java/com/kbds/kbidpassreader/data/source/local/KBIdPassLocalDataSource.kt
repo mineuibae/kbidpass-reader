@@ -138,4 +138,8 @@ class KBIdPassLocalDataSource internal constructor(
         withContext(ioDispatcher) {
             auditDao.addAudit(audit)
         }
+
+    override suspend fun refreshAudits() {
+        // NO-OP
+    }
 }

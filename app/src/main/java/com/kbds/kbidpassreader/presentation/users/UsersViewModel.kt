@@ -6,12 +6,10 @@ import com.kbds.kbidpassreader.data.Response
 import com.kbds.kbidpassreader.data.Response.Success
 import com.kbds.kbidpassreader.domain.model.User
 import com.kbds.kbidpassreader.domain.model.UserFilterType
-import com.kbds.kbidpassreader.domain.usecase.GetUsersUseCase
-import com.kbds.kbidpassreader.domain.usecase.ObserveUsersUseCase
+import com.kbds.kbidpassreader.domain.usecase.user.ObserveUsersUseCase
 
 class UsersViewModel @ViewModelInject constructor(
-    private val observeUsersUseCase: ObserveUsersUseCase,
-    private val getUsersUseCase: GetUsersUseCase
+    private val observeUsersUseCase: ObserveUsersUseCase
 ): ViewModel() {
 
     private var currentFiltering = MutableLiveData<UserFilterType>(UserFilterType.ALL_USERS)

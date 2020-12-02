@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:items="@{viewModel.users}"
+                app:userItems="@{viewModel.users}"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,13 +1,13 @@
-package com.kbds.kbidpassreader.domain.usecase
+package com.kbds.kbidpassreader.domain.usecase.user
 
 import com.kbds.kbidpassreader.data.source.KBIdPassRepository
 import com.kbds.kbidpassreader.domain.model.User
 import javax.inject.Inject
 
-class UpdateUserUseCase @Inject constructor(
+class DeRegisterUserUseCase @Inject constructor(
     private val kbIdPassRepository: KBIdPassRepository
 ) {
     suspend operator fun invoke(user: User) {
-        return kbIdPassRepository.updateUser(user)
+        return kbIdPassRepository.deRegisterUser(user)
     }
 }

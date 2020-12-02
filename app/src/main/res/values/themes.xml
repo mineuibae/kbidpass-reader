@@ -62,6 +62,13 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <style parent="@style/basic_text_style" name="black_bold_body_12_pt_left">
+        <item name="android:fontFamily">@font/spoqa_han_sans_bold</item>
+        <item name="android:textSize">12dp</item>
+        <item name="android:lineHeight">16dp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
     <style parent="@style/basic_text_style" name="black_bold_title_20_pt_left">
         <item name="android:fontFamily">@font/spoqa_han_sans_bold</item>
         <item name="android:textSize">20dp</item>

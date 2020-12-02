@@ -22,8 +22,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kbds.kbidpassreader.domain.model.User
 import com.kbds.kbidpassreader.extension.toFormatted
 
-@BindingAdapter("app:items")
-fun setItems(listView: RecyclerView, items: List<User>?) {
+@BindingAdapter("app:userItems")
+fun setUserItems(listView: RecyclerView, items: List<User>?) {
     items?.let {
         (listView.adapter as UsersAdapter).submitList(items)
     }

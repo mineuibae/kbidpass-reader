@@ -1,4 +1,4 @@
-package com.kbds.kbidpassreader.domain.usecase
+package com.kbds.kbidpassreader.domain.usecase.user
 
 import com.kbds.kbidpassreader.data.Response
 import com.kbds.kbidpassreader.data.source.KBIdPassRepository

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.kbds.kbidpassreader.base.BaseFragment
 import com.kbds.kbidpassreader.databinding.FragmentAuditsBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -14,6 +15,7 @@ class AuditsFragment : BaseFragment() {
 
     private lateinit var binding: FragmentAuditsBinding
     private val auditsViewModel by activityViewModels<AuditsViewModel>()
+    private lateinit var listAdapter: AuditsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,5 +33,19 @@ class AuditsFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.lifecycleOwner = this.viewLifecycleOwner
+
+        setWindowTopInset()
+        setupListAdapter()
+    }
+
+    private fun setupListAdapter() {
+        val viewModel = binding.viewModel
+        if(viewModel != null) {
+            listAdapter = AuditsAdapter(viewModel)
+            binding.auditsList.apply {
+                adapter = listAdapter
+                addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+            }
+        }
     }
 }

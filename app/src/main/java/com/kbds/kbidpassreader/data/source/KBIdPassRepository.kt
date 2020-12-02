@@ -44,4 +44,6 @@ interface KBIdPassRepository {
     suspend fun getAuditsFromUser(@NonNull user_id: String) : Response<List<Audit>>
 
     suspend fun addAudit(@NonNull audit: Audit)
+
+    suspend fun refreshAudits()
 }

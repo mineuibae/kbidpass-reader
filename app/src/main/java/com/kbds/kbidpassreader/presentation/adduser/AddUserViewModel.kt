@@ -6,16 +6,19 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kbds.kbidpassreader.data.Response
+import com.kbds.kbidpassreader.domain.model.AuditType
 import com.kbds.kbidpassreader.domain.model.User
-import com.kbds.kbidpassreader.domain.usecase.AddUserUseCase
-import com.kbds.kbidpassreader.domain.usecase.GetUserUseCase
+import com.kbds.kbidpassreader.domain.usecase.audit.AddAuditUseCase
+import com.kbds.kbidpassreader.domain.usecase.user.AddUserUseCase
+import com.kbds.kbidpassreader.domain.usecase.user.GetUserUseCase
 import com.kbds.kbidpassreader.util.Event
 import kotlinx.coroutines.launch
 import java.util.*
 
 class AddUserViewModel @ViewModelInject constructor(
     private val getUserUseCase: GetUserUseCase,
-    private val addUserUseCase: AddUserUseCase
+    private val addUserUseCase: AddUserUseCase,
+    private val addAuditUseCase: AddAuditUseCase
 ): ViewModel() {
 
     val userId = MutableLiveData<String>()
@@ -35,12 +38,40 @@ class AddUserViewModel @ViewModelInject constructor(
 
         if(id != null && name != null && password != null) {
             viewModelScope.launch {
-                when(getUserUseCase(id)){
+                val responseUser = getUserUseCase(id)
+
+                when(responseUser){
                     is Response.Success -> {
                         showSnackbarMessage("이미 등록되어있는 사용자입니다.")
+                        addAuditUseCase(
+                            user = responseUser.data,
+                            content = "사용자 등록 실패 - 기등록 사용자",
+                            desc = "사용자 등록 요청",
+                            audit_type = AuditType.ERROR)
                     }
+
                     else -> {
-                        addUserUseCase(User(id = id, name = name, pw_hash = password, created_at = Calendar.getInstance().time))
+                        try {
+                            val user = User(
+                                id = id,
+                                name = name,
+                                pw_hash = password,
+                                created_at = Calendar.getInstance().time
+                            )
+
+                            addUserUseCase(user)
+                            addAuditUseCase(
+                                user = user,
+                                content = "사용자 등록 성공",
+                                desc = "사용자 등록 요청",
+                                audit_type = AuditType.SUCCESS)
+
+                        } catch (e: Exception) {
+                            addAuditUseCase(
+                                content = "사용자 등록 실패 - ${e.message}",
+                                desc = "사용자 등록 요청",
+                                audit_type = AuditType.ERROR)
+                        }
 
                         _taskUpdatedEvent.value = Event(Unit)
                     }

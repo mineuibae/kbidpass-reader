@@ -96,4 +96,8 @@ class KBIdPassDefaultRepository(
             launch { kbIdPassLocalDataSource.addAudit(audit) }
         }
     }
+
+    override suspend fun refreshAudits() {
+        kbIdPassLocalDataSource.refreshAudits()
+    }
 }

@@ -1,4 +1,4 @@
-package com.kbds.kbidpassreader.domain.usecase
+package com.kbds.kbidpassreader.domain.usecase.user
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
