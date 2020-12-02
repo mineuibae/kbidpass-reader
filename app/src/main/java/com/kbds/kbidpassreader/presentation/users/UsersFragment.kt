@@ -4,14 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.kbds.kbidpassreader.base.BaseFragment
 import com.kbds.kbidpassreader.databinding.FragmentUsersBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class UsersFragment : Fragment() {
+class UsersFragment : BaseFragment() {
 
     private lateinit var binding: FragmentUsersBinding
     private val usersViewModel by activityViewModels<UsersViewModel>()
@@ -29,11 +29,12 @@ class UsersFragment : Fragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         binding.lifecycleOwner = this.viewLifecycleOwner
 
+        setWindowTopInset()
         setupListAdapter()
         initView()
     }

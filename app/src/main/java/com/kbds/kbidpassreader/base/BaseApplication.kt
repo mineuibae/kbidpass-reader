@@ -1,4 +1,6 @@
 package com.kbds.kbidpassreader.base
 
-class BaseApplication {
+import androidx.multidex.MultiDexApplication
+
+open class BaseApplication : MultiDexApplication() {
 }

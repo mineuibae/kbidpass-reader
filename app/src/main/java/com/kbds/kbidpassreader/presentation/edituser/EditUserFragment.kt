@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.kbds.kbidpassreader.base.BaseFragment
 import com.kbds.kbidpassreader.databinding.FragmentEditUserBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class EditUserFragment : Fragment() {
+class EditUserFragment : BaseFragment() {
     private lateinit var binding: FragmentEditUserBinding
     private val editUserViewModel by viewModels<EditUserViewModel>()
 
@@ -22,16 +22,12 @@ class EditUserFragment : Fragment() {
             this.viewModel = editUserViewModel
         }
 
-        binding.lifecycleOwner = this.viewLifecycleOwner
-
-        initView()
-
         return binding.root
     }
 
-    private fun initView() {
-        binding.appIcon.apply {
-            setMinAndMaxFrame(42, 42)
-        }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.lifecycleOwner = this.viewLifecycleOwner
     }
 }

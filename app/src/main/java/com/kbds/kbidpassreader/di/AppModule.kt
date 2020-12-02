@@ -1,6 +1,8 @@
 package com.kbds.kbidpassreader.di
 
+import android.app.Service
 import android.content.Context
+import android.os.Vibrator
 import androidx.room.Room
 import com.kbds.kbidpassreader.data.source.KBIdPassDataSource
 import com.kbds.kbidpassreader.data.source.KBIdPassDefaultRepository
@@ -60,6 +62,10 @@ object AppModule {
     @MainDispatcher
     @Provides
     fun provideDefaultDispatcher() = Dispatchers.Main
+
+    @Provides
+    fun provideVibrator(@ApplicationContext context: Context): Vibrator =
+        context.applicationContext.getSystemService(Service.VIBRATOR_SERVICE) as Vibrator
 }
 
 /*

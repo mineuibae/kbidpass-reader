@@ -13,8 +13,8 @@
         <item name="android:statusBarColor" tools:targetApi="l">@android:color/transparent</item>
         <!-- Customize your theme here. -->
         <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowDisablePreview">true</item>
     </style>
-
 
     <!-- Texts styles -->
     <style name="basic_text_style" parent="@android:style/TextAppearance">
@@ -45,6 +45,13 @@
         <item name="android:fontFamily">@font/spoqa_han_sans_bold</item>
         <item name="android:textSize">18dp</item>
         <item name="android:lineHeight">26dp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style parent="@style/basic_text_style" name="black_medium_body_14_pt_left">
+        <item name="android:fontFamily">@font/spoqa_han_sans_regular</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:lineHeight">20dp</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
