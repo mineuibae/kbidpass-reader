@@ -8,10 +8,15 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.journeyapps.barcodescanner.BarcodeResult
+import com.kbds.kbidpassreader.domain.model.AuditType
+import com.kbds.kbidpassreader.domain.usecase.audit.AddAuditUseCase
 import com.kbds.kbidpassreader.util.Event
+import kotlinx.coroutines.launch
 
 class QRCodeViewModel @ViewModelInject constructor(
+    private val addAuditUseCase: AddAuditUseCase,
     private val vibrator: Vibrator
 ) : ViewModel() {
 
@@ -40,6 +45,13 @@ class QRCodeViewModel @ViewModelInject constructor(
 
         if(!resultText.isNullOrEmpty()) {
             showSnackbarMessage(resultText)
+
+            viewModelScope.launch {
+                addAuditUseCase(
+                    content = "QR 인증 성공",
+                    desc = "QR 인증 요청",
+                    audit_type = AuditType.SUCCESS)
+            }
 
         } else {
             showSnackbarMessage("인증에 실패했습니다.")

@@ -27,7 +27,7 @@
             android:text="@{audit.desc}"
             android:layout_marginStart="8dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/audit_image_view"
             style="@style/black_bold_body_18_pt_left"
             tools:text="사용자 등록 요청" />
 
@@ -38,52 +38,45 @@
             android:text="@{audit.content}"
             android:layout_marginStart="8dp"
             app:layout_constraintTop_toBottomOf="@id/audit_desc"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/audit_image_view"
             style="@style/black_medium_body_12_pt_left"
             tools:text="사용자 등록 성공" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ImageView
+            android:id="@+id/audit_image_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/ic_normal"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/audit_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{audit.user_name}"
+            android:layout_marginStart="8dp"
             app:layout_constraintTop_toBottomOf="@id/audit_content"
-            app:layout_constraintStart_toStartOf="parent"
-            android:visibility="@{audit.audit_type != null ? View.VISIBLE : View.GONE}">
+            app:layout_constraintStart_toEndOf="@id/audit_image_view"
+            style="@style/black_bold_body_12_pt_left"
+            android:visibility="@{audit.user_name != null ? View.VISIBLE : View.GONE}"
+            tools:text="배민의" />
 
-            <ImageView
-                android:id="@+id/audit_image_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="4dp"
-                android:background="@drawable/ic_normal"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
-                android:id="@+id/audit_user_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{audit.user_name}"
-                android:layout_marginStart="4dp"
-                app:layout_constraintTop_toTopOf="@id/audit_image_view"
-                app:layout_constraintBottom_toBottomOf="@id/audit_image_view"
-                app:layout_constraintStart_toEndOf="@id/audit_image_view"
-                style="@style/black_bold_body_12_pt_left"
-                tools:text="배민의" />
-
-            <TextView
-                android:id="@+id/audit_user_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{audit.user_id}"
-                android:layout_marginStart="4dp"
-                app:layout_constraintTop_toTopOf="@id/audit_user_name"
-                app:layout_constraintBottom_toBottomOf="@id/audit_user_name"
-                app:layout_constraintStart_toEndOf="@id/audit_user_name"
-                style="@style/black_medium_body_12_pt_left"
-                tools:text="D190411" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/audit_user_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{audit.user_id}"
+            android:layout_marginStart="4dp"
+            app:layout_constraintTop_toTopOf="@id/audit_user_name"
+            app:layout_constraintBottom_toBottomOf="@id/audit_user_name"
+            app:layout_constraintStart_toEndOf="@id/audit_user_name"
+            style="@style/black_medium_body_12_pt_left"
+            android:visibility="@{audit.user_id != null ? View.VISIBLE : View.GONE}"
+            tools:text="D190411" />
 
         <TextView
             android:id="@+id/audit_logged_at"
