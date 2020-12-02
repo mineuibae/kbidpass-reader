@@ -15,16 +15,44 @@
  */
 package com.kbds.kbidpassreader.presentation.users
 
+import android.view.View
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kbds.kbidpassreader.domain.model.User
+import com.kbds.kbidpassreader.extension.toFormatted
 
-/**
- * [BindingAdapter]s for the [Task]s list.
- */
 @BindingAdapter("app:items")
 fun setItems(listView: RecyclerView, items: List<User>?) {
     items?.let {
         (listView.adapter as UsersAdapter).submitList(items)
+    }
+}
+
+@BindingAdapter("createdDate")
+fun setCreatedDate(textView: TextView, user: User) {
+    with(textView) {
+        user.created_at.let { date ->
+            if(date != null) {
+                text = "생성일 : ${date.toFormatted()}"
+                visibility = View.VISIBLE
+            } else {
+                visibility = View.GONE
+            }
+        }
+    }
+}
+
+@BindingAdapter("registeredDate")
+fun setRegisteredDate(textView: TextView, user: User) {
+    with(textView) {
+        user.registered_at.let { date ->
+            if(date != null) {
+                text = "등록일 : ${date.toFormatted()}"
+                visibility = View.VISIBLE
+            } else {
+                visibility = View.GONE
+            }
+        }
     }
 }

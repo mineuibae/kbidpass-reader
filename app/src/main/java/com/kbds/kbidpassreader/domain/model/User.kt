@@ -26,6 +26,9 @@ data class User (
     @ColumnInfo(name = "created_at")
     var created_at: Date? = null,
 
+    @ColumnInfo(name = "registered_at")
+    var registered_at: Date? = null,
+
     @ColumnInfo(name = "is_registered")
     var is_registered: Boolean = false
 )

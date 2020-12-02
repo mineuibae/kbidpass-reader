@@ -11,6 +11,7 @@ import com.kbds.kbidpassreader.domain.usecase.AddUserUseCase
 import com.kbds.kbidpassreader.domain.usecase.GetUserUseCase
 import com.kbds.kbidpassreader.util.Event
 import kotlinx.coroutines.launch
+import java.util.*
 
 class AddUserViewModel @ViewModelInject constructor(
     private val getUserUseCase: GetUserUseCase,
@@ -39,7 +40,7 @@ class AddUserViewModel @ViewModelInject constructor(
                         showSnackbarMessage("이미 등록되어있는 사용자입니다.")
                     }
                     else -> {
-                        addUserUseCase(User(id = id, name = name, pw_hash = password))
+                        addUserUseCase(User(id = id, name = name, pw_hash = password, created_at = Calendar.getInstance().time))
 
                         _taskUpdatedEvent.value = Event(Unit)
                     }
