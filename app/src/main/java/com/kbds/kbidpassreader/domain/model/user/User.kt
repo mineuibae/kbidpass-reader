@@ -1,4 +1,4 @@
-package com.kbds.kbidpassreader.domain.model
+package com.kbds.kbidpassreader.domain.model.user
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

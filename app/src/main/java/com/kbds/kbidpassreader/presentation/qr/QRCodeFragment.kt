@@ -90,7 +90,9 @@ class QRCodeFragment : BaseFragment() {
 
     private val barcodeCallback = object : BarcodeCallback {
         override fun barcodeResult(result: BarcodeResult?) {
-            qrCodeViewModel.barcodeFinish(result)
+            if(result != null) {
+                qrCodeViewModel.barcodeFinish(result)
+            }
         }
 
         override fun possibleResultPoints(resultPoints: MutableList<ResultPoint>?) {

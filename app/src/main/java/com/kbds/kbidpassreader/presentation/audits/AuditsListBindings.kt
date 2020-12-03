@@ -18,7 +18,7 @@ package com.kbds.kbidpassreader.presentation.audits
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.kbds.kbidpassreader.domain.model.Audit
+import com.kbds.kbidpassreader.domain.model.audit.Audit
 import com.kbds.kbidpassreader.extension.toFormatted
 
 @BindingAdapter("app:auditsItems")

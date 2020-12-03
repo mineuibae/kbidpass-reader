@@ -2,7 +2,7 @@ package com.kbds.kbidpassreader.domain.usecase.audit
 
 import com.kbds.kbidpassreader.data.Response
 import com.kbds.kbidpassreader.data.source.KBIdPassRepository
-import com.kbds.kbidpassreader.domain.model.Audit
+import com.kbds.kbidpassreader.domain.model.audit.Audit
 import javax.inject.Inject
 
 class GetAuditUseCase @Inject constructor(

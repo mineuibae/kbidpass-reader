@@ -1,9 +1,10 @@
-package com.kbds.kbidpassreader.domain.model
+package com.kbds.kbidpassreader.domain.model.audit
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import com.kbds.kbidpassreader.domain.model.user.User
 import java.util.*
 
 @Entity(

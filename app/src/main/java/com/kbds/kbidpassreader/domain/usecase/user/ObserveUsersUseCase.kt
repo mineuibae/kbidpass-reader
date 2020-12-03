@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.kbds.kbidpassreader.data.Response
 import com.kbds.kbidpassreader.data.source.KBIdPassRepository
-import com.kbds.kbidpassreader.domain.model.User
-import com.kbds.kbidpassreader.domain.model.UserFilterType
+import com.kbds.kbidpassreader.domain.model.user.User
+import com.kbds.kbidpassreader.domain.model.user.UserFilterType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

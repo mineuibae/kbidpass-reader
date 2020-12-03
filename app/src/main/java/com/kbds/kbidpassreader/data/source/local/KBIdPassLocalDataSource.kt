@@ -8,8 +8,8 @@ import com.kbds.kbidpassreader.data.Response.Success
 import com.kbds.kbidpassreader.data.source.KBIdPassDataSource
 import com.kbds.kbidpassreader.data.source.local.dao.AuditDao
 import com.kbds.kbidpassreader.data.source.local.dao.UserDao
-import com.kbds.kbidpassreader.domain.model.Audit
-import com.kbds.kbidpassreader.domain.model.User
+import com.kbds.kbidpassreader.domain.model.audit.Audit
+import com.kbds.kbidpassreader.domain.model.user.User
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

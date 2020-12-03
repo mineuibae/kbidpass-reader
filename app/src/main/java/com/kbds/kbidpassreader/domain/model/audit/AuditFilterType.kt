@@ -1,4 +1,4 @@
-package com.kbds.kbidpassreader.domain.model
+package com.kbds.kbidpassreader.domain.model.audit
 
 enum class AuditFilterType {
     ALL_AUDITS,

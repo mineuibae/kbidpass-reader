@@ -1,4 +1,4 @@
-package com.kbds.kbidpassreader.domain.model
+package com.kbds.kbidpassreader.domain.model.user
 
 enum class UserFilterType {
     ALL_USERS,

@@ -5,8 +5,8 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.kbds.kbidpassreader.data.source.local.dao.AuditDao
 import com.kbds.kbidpassreader.data.source.local.dao.UserDao
-import com.kbds.kbidpassreader.domain.model.Audit
-import com.kbds.kbidpassreader.domain.model.User
+import com.kbds.kbidpassreader.domain.model.audit.Audit
+import com.kbds.kbidpassreader.domain.model.user.User
 
 @Database(entities = [User::class, Audit::class], version = 1)
 @TypeConverters(Converters::class)

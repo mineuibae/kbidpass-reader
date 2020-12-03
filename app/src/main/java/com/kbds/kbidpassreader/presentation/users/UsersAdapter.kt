@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kbds.kbidpassreader.R
 import com.kbds.kbidpassreader.databinding.UserItemBinding
-import com.kbds.kbidpassreader.domain.model.User
+import com.kbds.kbidpassreader.domain.model.user.User
 
 class UsersAdapter(private val viewModel: UsersViewModel) :
     ListAdapter<User, UsersAdapter.UserViewHolder>(UserDiffCallback()) {

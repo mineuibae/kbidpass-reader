@@ -8,7 +8,7 @@
 
         <variable
             name="audit"
-            type="com.kbds.kbidpassreader.domain.model.Audit" />
+            type="com.kbds.kbidpassreader.domain.model.audit.Audit" />
 
         <variable
             name="viewModel"

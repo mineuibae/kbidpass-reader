@@ -2,7 +2,7 @@ package com.kbds.kbidpassreader.data.source.local.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.kbds.kbidpassreader.domain.model.User
+import com.kbds.kbidpassreader.domain.model.user.User
 
 @Dao
 interface UserDao {

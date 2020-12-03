@@ -3,15 +3,16 @@ package com.kbds.kbidpassreader.presentation.audits
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.kbds.kbidpassreader.data.Response
-import com.kbds.kbidpassreader.domain.model.Audit
-import com.kbds.kbidpassreader.domain.model.AuditFilterType
+import com.kbds.kbidpassreader.domain.model.audit.Audit
+import com.kbds.kbidpassreader.domain.model.audit.AuditFilterType
 import com.kbds.kbidpassreader.domain.usecase.audit.ObserveAuditsUseCase
 
 class AuditsViewModel @ViewModelInject constructor(
     private val observeAuditsUseCase: ObserveAuditsUseCase
 ) : ViewModel() {
 
-    private var currentFiltering = MutableLiveData<Pair<AuditFilterType, String?>>(Pair(AuditFilterType.ALL_AUDITS, null))
+    private var currentFiltering = MutableLiveData<Pair<AuditFilterType, String?>>(Pair(
+        AuditFilterType.ALL_AUDITS, null))
 
     private val _audits: LiveData<Response<List<Audit>>> = currentFiltering.switchMap { filter ->
         liveData {

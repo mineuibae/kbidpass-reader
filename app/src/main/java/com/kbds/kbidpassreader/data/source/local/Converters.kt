@@ -1,7 +1,7 @@
 package com.kbds.kbidpassreader.data.source.local
 
 import androidx.room.TypeConverter
-import com.kbds.kbidpassreader.domain.model.AuditType
+import com.kbds.kbidpassreader.domain.model.audit.AuditType
 import java.util.*
 
 class Converters {

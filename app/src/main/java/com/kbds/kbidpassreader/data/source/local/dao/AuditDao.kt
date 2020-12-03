@@ -5,7 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.kbds.kbidpassreader.domain.model.Audit
+import com.kbds.kbidpassreader.domain.model.audit.Audit
 
 @Dao
 interface AuditDao {

@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kbds.kbidpassreader.R
 import com.kbds.kbidpassreader.databinding.AuditItemBinding
-import com.kbds.kbidpassreader.domain.model.Audit
-import com.kbds.kbidpassreader.domain.model.AuditType
+import com.kbds.kbidpassreader.domain.model.audit.Audit
+import com.kbds.kbidpassreader.domain.model.audit.AuditType
 
 class AuditsAdapter(private val viewModel: AuditsViewModel) :
     ListAdapter<Audit, AuditsAdapter.AuditViewHolder>(AuditDiffCallback()){

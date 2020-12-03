@@ -19,7 +19,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.kbds.kbidpassreader.domain.model.User
+import com.kbds.kbidpassreader.domain.model.user.User
 import com.kbds.kbidpassreader.extension.toFormatted
 
 @BindingAdapter("app:userItems")

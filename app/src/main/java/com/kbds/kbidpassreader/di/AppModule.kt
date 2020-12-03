@@ -19,6 +19,7 @@ import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.serialization.json.Json
 import javax.inject.Singleton
 
 @Module
@@ -66,6 +67,11 @@ object AppModule {
     @Provides
     fun provideVibrator(@ApplicationContext context: Context): Vibrator =
         context.applicationContext.getSystemService(Service.VIBRATOR_SERVICE) as Vibrator
+
+    @Provides
+    fun provideJson() : Json {
+        return Json { ignoreUnknownKeys = true }
+    }
 }
 
 /*
