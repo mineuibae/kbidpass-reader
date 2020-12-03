@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
@@ -74,6 +75,8 @@ class QRCodeFragment : BaseFragment() {
             checkPermission()
         }
 
+        binding.flashToggleButton.setOnCheckedChangeListener(flashToggleListener)
+
         qrCodeViewModel.permissionGranted.observe(viewLifecycleOwner, Observer {isGranted ->
             binding.barcodeView.apply {
                 if(isGranted) {
@@ -93,6 +96,10 @@ class QRCodeFragment : BaseFragment() {
         override fun possibleResultPoints(resultPoints: MutableList<ResultPoint>?) {
 
         }
+    }
+
+    private val flashToggleListener = CompoundButton.OnCheckedChangeListener { _, isChecked ->
+        binding.barcodeView.setTorch(isChecked)
     }
 
     override fun onResume() {
