@@ -20,28 +20,6 @@
         android:layout_height="wrap_content"
         android:padding="8dp" >
 
-        <TextView
-            android:id="@+id/audit_desc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{audit.desc}"
-            android:layout_marginStart="8dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@id/audit_image_view"
-            style="@style/black_bold_body_18_pt_left"
-            tools:text="사용자 등록 요청" />
-
-        <TextView
-            android:id="@+id/audit_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{audit.content}"
-            android:layout_marginStart="8dp"
-            app:layout_constraintTop_toBottomOf="@id/audit_desc"
-            app:layout_constraintStart_toEndOf="@id/audit_image_view"
-            style="@style/black_medium_body_12_pt_left"
-            tools:text="사용자 등록 성공" />
-
         <ImageView
             android:id="@+id/audit_image_view"
             android:layout_width="wrap_content"
@@ -54,12 +32,34 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
+            android:id="@+id/audit_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{audit.title}"
+            android:layout_marginStart="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/audit_image_view"
+            style="@style/black_bold_body_18_pt_left"
+            tools:text="사용자 등록 요청" />
+
+        <TextView
+            android:id="@+id/audit_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{audit.desc}"
+            android:layout_marginStart="8dp"
+            app:layout_constraintTop_toBottomOf="@id/audit_title"
+            app:layout_constraintStart_toEndOf="@id/audit_image_view"
+            style="@style/black_medium_body_12_pt_left"
+            tools:text="사용자 등록 성공" />
+
+        <TextView
             android:id="@+id/audit_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{audit.user_name}"
             android:layout_marginStart="8dp"
-            app:layout_constraintTop_toBottomOf="@id/audit_content"
+            app:layout_constraintTop_toBottomOf="@id/audit_desc"
             app:layout_constraintStart_toEndOf="@id/audit_image_view"
             style="@style/black_bold_body_12_pt_left"
             android:visibility="@{audit.user_name != null ? View.VISIBLE : View.GONE}"
@@ -79,12 +79,25 @@
             tools:text="D190411" />
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{audit.content}"
+            android:layout_marginStart="4dp"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintTop_toBottomOf="@id/audit_user_name"
+            app:layout_constraintStart_toEndOf="@id/audit_image_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            style="@style/black_medium_body_12_pt_left"
+            android:visibility="@{audit.content != null ? View.VISIBLE : View.GONE}"
+            tools:text="{'id':'D190411', 'name':'배민의'}" />
+
+        <TextView
             android:id="@+id/audit_logged_at"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            app:layout_constraintTop_toTopOf="@id/audit_desc"
-            app:layout_constraintBottom_toBottomOf="@id/audit_desc"
+            app:layout_constraintTop_toTopOf="@id/audit_title"
+            app:layout_constraintBottom_toBottomOf="@id/audit_title"
             app:layout_constraintEnd_toEndOf="parent"
             style="@style/black_medium_body_12_pt_left"
             app:loggedDate="@{audit}"

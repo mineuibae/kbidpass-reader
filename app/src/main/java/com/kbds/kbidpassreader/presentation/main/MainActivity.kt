@@ -1,6 +1,8 @@
 package com.kbds.kbidpassreader.presentation.main
 
 import android.os.Bundle
+import android.view.View
+import androidx.core.view.forEach
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -26,6 +28,11 @@ class MainActivity : BaseActivity() {
 
         binding.bottomNavigation.apply {
             setupWithNavController(navController)
+
+            menu.forEach {
+                val view = findViewById<View>(it.itemId)
+                view.setOnLongClickListener { true }
+            }
         }
     }
 }

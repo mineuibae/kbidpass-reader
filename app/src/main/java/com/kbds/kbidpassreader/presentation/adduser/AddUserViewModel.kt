@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kbds.kbidpassreader.data.Response
-import com.kbds.kbidpassreader.domain.model.AuditType
 import com.kbds.kbidpassreader.domain.model.User
 import com.kbds.kbidpassreader.domain.usecase.audit.AddAuditUseCase
 import com.kbds.kbidpassreader.domain.usecase.user.AddUserUseCase
@@ -43,11 +42,7 @@ class AddUserViewModel @ViewModelInject constructor(
                 when(responseUser){
                     is Response.Success -> {
                         showSnackbarMessage("이미 등록되어있는 사용자입니다.")
-                        addAuditUseCase(
-                            user = responseUser.data,
-                            content = "사용자 등록 실패 - 기등록 사용자",
-                            desc = "사용자 등록 요청",
-                            audit_type = AuditType.ERROR)
+                        addAuditUseCase.addUserFailAudit(responseUser.data, "기등록 사용자")
                     }
 
                     else -> {
@@ -60,17 +55,10 @@ class AddUserViewModel @ViewModelInject constructor(
                             )
 
                             addUserUseCase(user)
-                            addAuditUseCase(
-                                user = user,
-                                content = "사용자 등록 성공",
-                                desc = "사용자 등록 요청",
-                                audit_type = AuditType.SUCCESS)
+                            addAuditUseCase.addUserSuccessAudit(user)
 
                         } catch (e: Exception) {
-                            addAuditUseCase(
-                                content = "사용자 등록 실패 - ${e.message}",
-                                desc = "사용자 등록 요청",
-                                audit_type = AuditType.ERROR)
+                            addAuditUseCase.addUserFailAudit(message = e.message)
                         }
 
                         _taskUpdatedEvent.value = Event(Unit)

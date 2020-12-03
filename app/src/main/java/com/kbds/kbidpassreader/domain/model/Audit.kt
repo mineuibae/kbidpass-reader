@@ -27,15 +27,18 @@ data class Audit(
     @ColumnInfo(name = "user_name")
     var user_name: String? = null,
 
+    @ColumnInfo(name = "title")
+    var title: String,
+
     @ColumnInfo(name = "content")
     var content: String? = null,
 
     @ColumnInfo(name = "desc")
-    var desc: String? = null,
+    var desc: String,
 
     @ColumnInfo(name = "logged_at")
-    var logged_at: Date? = null,
+    var logged_at: Date,
 
     @ColumnInfo(name = "audit_type")
-    var audit_type: AuditType? = null
+    var audit_type: AuditType
 )
