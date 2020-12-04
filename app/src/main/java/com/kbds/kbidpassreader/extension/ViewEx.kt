@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.kbds.kbidpassreader.util.Event
+import com.kbds.kbidpassreader.view.ToolTip
 
 fun View.setWindowTopInset(callback: (Int) -> Unit) {
     ViewCompat.setOnApplyWindowInsetsListener(this) { _, insets ->
@@ -33,6 +34,26 @@ fun View.setSnackbar(
     snackbarEvent.observe(lifecycleOwner, Observer { event ->
         event.getContentIfNotHandled()?.let { snackBarText ->
             showSnackbar(snackBarText, timeLength, callback)
+        }
+    })
+}
+
+fun View.showToolTip(tooTipText: String, timeLength: Long, callback: ToolTip.Callback? = null) {
+    ToolTip.make(this, tooTipText, timeLength).run {
+        addCallback(callback)
+        show()
+    }
+}
+
+fun View.setToolTip(
+    lifecycleOwner: LifecycleOwner,
+    toolTipEvent: LiveData<Event<String>>,
+    timeLength: Long,
+    callback: ToolTip.Callback? = null
+) {
+    toolTipEvent.observe(lifecycleOwner, Observer { event ->
+        event.getContentIfNotHandled()?.let { toolTipText ->
+            showToolTip(toolTipText, timeLength, callback)
         }
     })
 }

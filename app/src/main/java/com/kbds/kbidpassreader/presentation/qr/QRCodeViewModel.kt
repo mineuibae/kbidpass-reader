@@ -36,8 +36,8 @@ class QRCodeViewModel @ViewModelInject constructor(
 
     private val barcodeLoading = MutableLiveData(false)
 
-    private val _snackbarText = MutableLiveData<Event<String>>()
-    val snackbarText: LiveData<Event<String>> = _snackbarText
+    private val _toolTipText = MutableLiveData<Event<String>>()
+    val toolTipText: LiveData<Event<String>> = _toolTipText
 
     fun barcodeFinish(result: BarcodeResult) {
         if(barcodeLoading.value == true) {
@@ -60,11 +60,11 @@ class QRCodeViewModel @ViewModelInject constructor(
                     verifyQRCode(qrCodeResult.dataBody ?: result.text, qrCodeResult)
                 }
                 QRCodeResultType.TIMEOUT -> {
-                    showSnackbarMessage("인증 시간이 초과되었습니다.")
+                    showToolTipMessage("인증 시간이 초과되었습니다.")
                     addAuditUseCase.qrFailAudit("QR 인증 실패", qrCodeResult.dataBody ?: result.text, qrCodeResult.message ?: "")
                 }
                 QRCodeResultType.ERROR -> {
-                    showSnackbarMessage("인증에 실패했습니다.")
+                    showToolTipMessage("인증에 실패했습니다.")
                     addAuditUseCase.qrFailAudit("QR 인증 실패", qrCodeResult.dataBody ?: result.text, qrCodeResult.message ?: "")
                 }
             }
@@ -87,28 +87,28 @@ class QRCodeViewModel @ViewModelInject constructor(
                                     is_registered = true
                                 ))
 
-                                showSnackbarMessage("사용자 등록에 성공했습니다.")
+                                showToolTipMessage("사용자 등록에 성공했습니다.")
                                 addAuditUseCase.qrSuccessAudit("QR 등록 성공", result, responseUser.data.name)
                             }
                             else if(qrCodeResult.type == QRCodeResultType.AUTH) {
-                                showSnackbarMessage("인증되었습니다.")
+                                showToolTipMessage("인증되었습니다.")
                                 addAuditUseCase.qrSuccessAudit("QR 로그인 성공", result, responseUser.data.name)
                             }
                         }
                         VerifyQRCodeUseCase.VerifyQRCodeResult.ERROR_UNREGISTERED -> {
-                            showSnackbarMessage("QR을 등록하지 않은 사용자입니다. 먼저 QR 등록을 진행해 주세요.")
+                            showToolTipMessage("QR을 등록하지 않은 사용자입니다. 먼저 QR 등록을 진행해 주세요.")
                             addAuditUseCase.qrFailAudit("QR 인증 실패", result, "${responseUser.data.name} - QR 미등록")
                         }
                         VerifyQRCodeUseCase.VerifyQRCodeResult.ERROR_PASSWORD -> {
-                            showSnackbarMessage("비밀번호가 일치하지 않습니다.")
+                            showToolTipMessage("비밀번호가 일치하지 않습니다.")
                             addAuditUseCase.qrFailAudit("QR 인증 실패", result, "${responseUser.data.name} - 비밀번호 오류")
                         }
                         VerifyQRCodeUseCase.VerifyQRCodeResult.ERROR_KB_PASS -> {
-                            showSnackbarMessage("고유키가 일치하지 않습니다.")
+                            showToolTipMessage("고유키가 일치하지 않습니다.")
                             addAuditUseCase.qrFailAudit("QR 인증 실패", result, "${responseUser.data.name} - KBPASS 오류")
                         }
                         VerifyQRCodeUseCase.VerifyQRCodeResult.ERROR_DEVICE_ID -> {
-                            showSnackbarMessage("단말기 고유값이 일치하지 않습니다. 다시 등록해 주세요.")
+                            showToolTipMessage("단말기 고유값이 일치하지 않습니다. 다시 등록해 주세요.")
                             addAuditUseCase.qrFailAudit("QR 인증 실패", result, "${responseUser.data.name} - DEVICE ID 오류")
                         }
                         else -> {
@@ -117,15 +117,15 @@ class QRCodeViewModel @ViewModelInject constructor(
                     }
                 }
                 else -> {
-                    showSnackbarMessage("등록되어있지 않은 사용자입니다.")
+                    showToolTipMessage("등록되어있지 않은 사용자입니다.")
                     addAuditUseCase.qrFailAudit("QR 인증 실패", result, "${id} - 미등록 사용자")
                 }
             }
         }
     }
 
-    fun showSnackbarMessage(message: String) {
-        _snackbarText.value = Event(message)
+    fun showToolTipMessage(message: String) {
+        _toolTipText.value = Event(message)
     }
 
     fun setBarcodeLoading(isLoading: Boolean) {

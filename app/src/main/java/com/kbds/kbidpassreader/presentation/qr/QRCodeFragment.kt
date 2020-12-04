@@ -12,13 +12,13 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import com.google.android.material.snackbar.Snackbar
 import com.google.zxing.ResultPoint
 import com.journeyapps.barcodescanner.BarcodeCallback
 import com.journeyapps.barcodescanner.BarcodeResult
 import com.kbds.kbidpassreader.base.BaseFragment
 import com.kbds.kbidpassreader.databinding.FragmentQrCodeBinding
-import com.kbds.kbidpassreader.extension.setSnackbar
+import com.kbds.kbidpassreader.extension.setToolTip
+import com.kbds.kbidpassreader.view.ToolTip
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -69,7 +69,7 @@ class QRCodeFragment : BaseFragment() {
     }
 
     private fun initView() {
-        setSnackbar()
+        setToolTip()
 
         binding.permissionLayout.setOnClickListener {
             checkPermission()
@@ -114,13 +114,13 @@ class QRCodeFragment : BaseFragment() {
         super.onPause()
     }
 
-    private fun setSnackbar() {
-        view?.setSnackbar(
+    private fun setToolTip() {
+        view?.setToolTip(
             this,
-            qrCodeViewModel.snackbarText,
-            Snackbar.LENGTH_SHORT,
-            object : Snackbar.Callback() {
-                override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+            qrCodeViewModel.toolTipText,
+            2000,
+            object : ToolTip.Callback {
+                override fun onDismissed() {
                     lifecycleScope.launch {
                         delay(1000)
                         qrCodeViewModel.setBarcodeLoading(false)
