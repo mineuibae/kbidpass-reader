@@ -55,15 +55,15 @@ class QRCodeViewModel @ViewModelInject constructor(
 
             when(qrCodeResult.type) {
                 QRCodeResultType.REGISTER -> {
-                    registerUser(result.text, qrCodeResult)
+                    registerUser(qrCodeResult.dataBody ?: result.text, qrCodeResult)
                 }
                 QRCodeResultType.AUTH -> {
-                    authUser(result.text, qrCodeResult)
+                    authUser(qrCodeResult.dataBody ?: result.text, qrCodeResult)
                 }
                 QRCodeResultType.ERROR -> {
                     showSnackbarMessage("인증에 실패했습니다.")
                     addAuditUseCase.qrFailAudit(
-                        content = result.text,
+                        content = qrCodeResult.dataBody ?: result.text,
                         desc = "QR 인증 실패",
                         message = qrCodeResult.message ?: ""
                     )
