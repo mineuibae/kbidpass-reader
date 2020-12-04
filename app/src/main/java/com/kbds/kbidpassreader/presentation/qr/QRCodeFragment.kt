@@ -82,7 +82,7 @@ class QRCodeFragment : BaseFragment() {
                 if(isGranted) {
                     decodeContinuous(barcodeCallback)
                 } else {
-                    stopDecoding()
+                    pause()
                 }
             }
         })
@@ -101,7 +101,7 @@ class QRCodeFragment : BaseFragment() {
     }
 
     private val flashToggleListener = CompoundButton.OnCheckedChangeListener { _, isChecked ->
-        binding.barcodeView.setTorch(isChecked)
+        if(isChecked) binding.barcodeView.setTorchOn() else binding.barcodeView.setTorchOff()
     }
 
     override fun onResume() {

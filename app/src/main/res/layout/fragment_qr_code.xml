@@ -22,10 +22,11 @@
             android:layout_height="match_parent"
             android:visibility="@{viewModel.permissionGranted ? View.VISIBLE : View.GONE}">
 
-            <com.journeyapps.barcodescanner.BarcodeView
+            <com.journeyapps.barcodescanner.DecoratedBarcodeView
                 android:id="@+id/barcode_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                app:zxing_scanner_layout="@layout/view_qr_scanner"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
