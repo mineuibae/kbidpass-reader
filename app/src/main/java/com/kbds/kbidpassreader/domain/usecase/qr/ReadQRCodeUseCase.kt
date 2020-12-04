@@ -7,8 +7,10 @@ import com.kbds.kbidpassreader.domain.model.qr.QRCodeResult
 import com.kbds.kbidpassreader.domain.model.qr.QRCodeResultType
 import com.kbds.kbidpassreader.extension.decodeBase64
 import com.kbds.kbidpassreader.extension.decryptAes256
+import com.kbds.kbidpassreader.extension.toDate
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
+import java.util.*
 import javax.inject.Inject
 
 class ReadQRCodeUseCase @Inject constructor(
@@ -24,12 +26,25 @@ class ReadQRCodeUseCase @Inject constructor(
             // 2. QR Json Parsing
             val kbPassQRCode = json.decodeFromString<QRCodeResponse>(decodeResult)
 
-            // TODO 3. Time Check
-
             if(kbPassQRCode.kb_pass.isNullOrEmpty() ||
-                kbPassQRCode.type.isNullOrEmpty()) {
+                kbPassQRCode.type.isNullOrEmpty() ||
+                kbPassQRCode.time.isNullOrEmpty()) {
 
                 return QRCodeResult(type = QRCodeResultType.ERROR, message = "KBPassQRCode 필수 값 오류", dataBody = decodeResult)
+            }
+
+            // 3. Time Check
+            try {
+                val resDate = kbPassQRCode.time.toDate()
+                val currentDate = Calendar.getInstance().time
+
+                val diffTime = (currentDate.time - resDate.time) / 1000
+                if(diffTime > 15) {
+                    return QRCodeResult(type = QRCodeResultType.TIMEOUT, message = "인증시간 초과", dataBody = decodeResult)
+                }
+
+            } catch (e: Exception) {
+                return QRCodeResult(type = QRCodeResultType.ERROR, message = "Date Format 오류", dataBody = decodeResult)
             }
 
             try {

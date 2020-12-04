@@ -3,6 +3,7 @@ package com.kbds.kbidpassreader.domain.model.qr
 enum class QRCodeResultType {
     REGISTER,
     AUTH,
+    TIMEOUT,
     ERROR;
 
     companion object {

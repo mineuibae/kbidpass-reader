@@ -60,6 +60,14 @@ class QRCodeViewModel @ViewModelInject constructor(
                 QRCodeResultType.AUTH -> {
                     authUser(qrCodeResult.dataBody ?: result.text, qrCodeResult)
                 }
+                QRCodeResultType.TIMEOUT -> {
+                    showSnackbarMessage("인증 시간이 초과되었습니다.")
+                    addAuditUseCase.qrFailAudit(
+                        content = qrCodeResult.dataBody ?: result.text,
+                        desc = "QR 인증 실패",
+                        message = qrCodeResult.message ?: ""
+                    )
+                }
                 QRCodeResultType.ERROR -> {
                     showSnackbarMessage("인증에 실패했습니다.")
                     addAuditUseCase.qrFailAudit(

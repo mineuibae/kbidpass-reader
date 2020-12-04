@@ -2,10 +2,20 @@ package com.kbds.kbidpassreader.extension
 
 import android.util.Base64
 import java.security.MessageDigest
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.crypto.Cipher
 import javax.crypto.SecretKey
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
+
+fun String.toDate() : Date {
+    try {
+        return SimpleDateFormat("yyyy.MM.dd HH:mm:ss").parse(this)
+    } catch (e: Exception) {
+        throw e
+    }
+}
 
 const val AES_KEY = "MOBILEKBMOBILEKBMOBILEKBMOBILEKB"
 const val AES_IV = "MOBILEKBMOBILEKB"
