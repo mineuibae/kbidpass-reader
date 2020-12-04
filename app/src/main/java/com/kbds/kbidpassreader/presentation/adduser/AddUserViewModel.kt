@@ -31,7 +31,7 @@ class AddUserViewModel @ViewModelInject constructor(
     val taskUpdatedEvent: LiveData<Event<Unit>> = _taskUpdatedEvent
 
     fun addUser() {
-        val id = userId.value
+        val id = userId.value?.toUpperCase()
         val name = userName.value
         val password = userPassword.value
 

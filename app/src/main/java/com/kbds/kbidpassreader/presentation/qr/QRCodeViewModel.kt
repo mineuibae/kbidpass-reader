@@ -73,7 +73,7 @@ class QRCodeViewModel @ViewModelInject constructor(
 
     private suspend fun verifyQRCode(result: String, qrCodeResult: QRCodeResult) {
         qrCodeResult.kbPassResponse?.let { kbPassResponse ->
-            val id = kbPassResponse.id ?: ""
+            val id = kbPassResponse.id?.toUpperCase() ?: ""
 
             when(val responseUser = getUserUseCase(id)){
                 is Response.Success -> {
