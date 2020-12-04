@@ -7,13 +7,13 @@ import com.kbds.kbidpassreader.domain.model.user.User
 @Dao
 interface UserDao {
 
-    @Query("SELECT * FROM users")
+    @Query("SELECT * FROM users ORDER BY id ASC")
     fun observeUsers(): LiveData<List<User>>
 
     @Query("SELECT * FROM users WHERE id = :id")
     fun observeUser(id: String): LiveData<User>
 
-    @Query("SELECT * FROM users")
+    @Query("SELECT * FROM users ORDER BY id ASC")
     fun getUsers(): List<User>
 
     @Query("SELECT * FROM users WHERE id = :id")
