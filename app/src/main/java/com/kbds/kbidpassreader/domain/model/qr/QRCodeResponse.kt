@@ -5,6 +5,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class QRCodeResponse(
     val type: String?,
-    val kb_pass: String?,
+    val kbpass: String?,
     val time: String?
 )

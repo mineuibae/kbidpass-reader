@@ -87,21 +87,29 @@ class QRCodeViewModel @ViewModelInject constructor(
 
             when(val responseUser = getUserUseCase(id)){
                 is Response.Success -> {
-                    //TODO Check Password
+                    if(responseUser.data.pw_hash == kbPassResponse.pw_hash) {
+                        updateUserUseCase(responseUser.data.copy(
+                            device_id = kbPassResponse.device_id,
+                            kb_pass = qrCodeResult.kbPass,
+                            registered_at = Calendar.getInstance().time,
+                            is_registered = true
+                        ))
 
-                    updateUserUseCase(responseUser.data.copy(
-                        device_id = kbPassResponse.device_id,
-                        kb_pass = qrCodeResult.kbPass,
-                        registered_at = Calendar.getInstance().time,
-                        is_registered = true
-                    ))
+                        showSnackbarMessage("사용자 등록에 성공했습니다.")
+                        addAuditUseCase.qrSuccessAudit(
+                            content = result,
+                            desc = "QR 등록 성공",
+                            message = responseUser.data.name
+                        )
 
-                    showSnackbarMessage("사용자 등록에 성공했습니다.")
-                    addAuditUseCase.qrSuccessAudit(
-                        content = result,
-                        desc = "QR 등록 성공",
-                        message = responseUser.data.name
-                    )
+                    } else {
+                        showSnackbarMessage("비밀번호가 일치하지 않습니다.")
+                        addAuditUseCase.qrFailAudit(
+                            content = result,
+                            desc = "QR 등록 실패",
+                            message = responseUser.data.name
+                        )
+                    }
                 }
                 else -> {
                     showSnackbarMessage("등록되어있지 않은 사용자입니다.")

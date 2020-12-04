@@ -26,7 +26,7 @@ class ReadQRCodeUseCase @Inject constructor(
             // 2. QR Json Parsing
             val kbPassQRCode = json.decodeFromString<QRCodeResponse>(decodeResult)
 
-            if(kbPassQRCode.kb_pass.isNullOrEmpty() ||
+            if(kbPassQRCode.kbpass.isNullOrEmpty() ||
                 kbPassQRCode.type.isNullOrEmpty() ||
                 kbPassQRCode.time.isNullOrEmpty()) {
 
@@ -39,7 +39,7 @@ class ReadQRCodeUseCase @Inject constructor(
                 val currentDate = Calendar.getInstance().time
 
                 val diffTime = (currentDate.time - resDate.time) / 1000
-                if(diffTime > 15) {
+                if(diffTime > QR_TIME_OUT) {
                     return QRCodeResult(type = QRCodeResultType.TIMEOUT, message = "인증시간 초과", dataBody = decodeResult)
                 }
 
@@ -49,7 +49,7 @@ class ReadQRCodeUseCase @Inject constructor(
 
             try {
                 // 4. KBPass Decrypt
-                val kbPass = kbPassQRCode.kb_pass.decryptAes256()
+                val kbPass = kbPassQRCode.kbpass.decryptAes256()
 
                 // 5. KBPass Json Parsing
                 val userInfo = json.decodeFromString<KBPassResponse>(kbPass)
@@ -65,7 +65,7 @@ class ReadQRCodeUseCase @Inject constructor(
                     "register", "auth" -> {
                         QRCodeResult(
                             kbPassResponse = userInfo,
-                            kbPass = kbPassQRCode.kb_pass,
+                            kbPass = kbPassQRCode.kbpass,
                             type = QRCodeResultType.getQRCodeResultType(kbPassQRCode.type),
                             dataBody = decodeResult)
                     }
@@ -81,5 +81,9 @@ class ReadQRCodeUseCase @Inject constructor(
         } catch(e: Exception){
             return QRCodeResult(type = QRCodeResultType.ERROR, message = "알 수 없는 QR 코드")
         }
+    }
+
+    companion object {
+        const val QR_TIME_OUT = 15
     }
 }

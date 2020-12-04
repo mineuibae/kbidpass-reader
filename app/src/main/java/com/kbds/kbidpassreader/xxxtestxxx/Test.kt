@@ -28,5 +28,3 @@ suspend fun test2() {
     delay(100)
     println(2)
 }
-
-
