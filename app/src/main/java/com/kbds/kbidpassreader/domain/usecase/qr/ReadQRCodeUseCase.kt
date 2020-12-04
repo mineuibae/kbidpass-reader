@@ -20,6 +20,16 @@ class ReadQRCodeUseCase @Inject constructor(
         val result = barcodeResult.text
 
         try {
+            // 등록
+            // "{\"id\":\"D190411\", \"pw_hash\":\"qwer1234\", \"device_id\":\"abcd\"}"
+            // "{\"type\" : \"register\", \"kbpass\" : \"$encKBPass\", \"time\" : \"2020.12.04 14:00:00\"}"
+            // eyJ0eXBlIiA6ICJyZWdpc3RlciIsICJrYnBhc3MiIDogIkdnNG9Zbm5YWWNxRU1PRGVzTU8vUU43eUpDWk4rWUQ5bTZlQVFER3FhTyt1dU95UDRqMmtUcmcyUnFTaEZObHBncWgxWlJhb2JqQS8KaFdXWCtWV3ViZwoiLCAidGltZSIgOiAiMjAyMC4xMi4wNCAxNDowMDowMCJ9
+
+            // 인증
+            // "{\"id\":\"D190411\", \"pw_hash\":\"qwer1234\", \"device_id\":\"abcd\"}"
+            // "{\"type\" : \"auth\", \"kbpass\" : \"$encKBPass\", \"time\" : \"2020.12.04 14:00:00\"}"
+            // eyJ0eXBlIiA6ICJhdXRoIiwgImticGFzcyIgOiAiR2c0b1lublhZY3FFTU9EZXNNTy9RTjd5SkNaTitZRDltNmVBUURHcWFPK3V1T3lQNGoya1RyZzJScVNoRk5scGdxaDFaUmFvYmpBLwpoV1dYK1ZXdWJnCiIsICJ0aW1lIiA6ICIyMDIwLjEyLjA0IDE0OjAwOjAwIn0
+
             // 1. QR Data Base64 Decode
             val decodeResult = result.decodeBase64()
 
@@ -38,7 +48,10 @@ class ReadQRCodeUseCase @Inject constructor(
                 val resDate = kbPassQRCode.time.toDate()
                 val currentDate = Calendar.getInstance().time
 
-                val diffTime = (currentDate.time - resDate.time) / 1000
+                val resTime = resDate.time
+                val currentTime = currentDate.time
+
+                val diffTime = if(currentTime >= resTime) currentTime - resTime else resTime - currentTime
                 if(diffTime > QR_TIME_OUT) {
                     return QRCodeResult(type = QRCodeResultType.TIMEOUT, message = "인증시간 초과", dataBody = decodeResult)
                 }

@@ -15,6 +15,7 @@ import com.kbds.kbidpassreader.domain.model.qr.QRCodeResult
 import com.kbds.kbidpassreader.domain.model.qr.QRCodeResultType
 import com.kbds.kbidpassreader.domain.usecase.audit.AddAuditUseCase
 import com.kbds.kbidpassreader.domain.usecase.qr.ReadQRCodeUseCase
+import com.kbds.kbidpassreader.domain.usecase.qr.VerifyQRCodeUseCase
 import com.kbds.kbidpassreader.domain.usecase.user.GetUserUseCase
 import com.kbds.kbidpassreader.domain.usecase.user.UpdateUserUseCase
 import com.kbds.kbidpassreader.util.Event
@@ -26,6 +27,7 @@ class QRCodeViewModel @ViewModelInject constructor(
     private val getUserUseCase: GetUserUseCase,
     private val updateUserUseCase: UpdateUserUseCase,
     private val readQRCodeUseCase: ReadQRCodeUseCase,
+    private val verifyQRCodeUseCase: VerifyQRCodeUseCase,
     private val vibrator: Vibrator
 ) : ViewModel() {
 
@@ -54,77 +56,72 @@ class QRCodeViewModel @ViewModelInject constructor(
             }
 
             when(qrCodeResult.type) {
-                QRCodeResultType.REGISTER -> {
-                    registerUser(qrCodeResult.dataBody ?: result.text, qrCodeResult)
-                }
-                QRCodeResultType.AUTH -> {
-                    authUser(qrCodeResult.dataBody ?: result.text, qrCodeResult)
+                QRCodeResultType.REGISTER, QRCodeResultType.AUTH -> {
+                    verifyQRCode(qrCodeResult.dataBody ?: result.text, qrCodeResult)
                 }
                 QRCodeResultType.TIMEOUT -> {
                     showSnackbarMessage("인증 시간이 초과되었습니다.")
-                    addAuditUseCase.qrFailAudit(
-                        content = qrCodeResult.dataBody ?: result.text,
-                        desc = "QR 인증 실패",
-                        message = qrCodeResult.message ?: ""
-                    )
+                    addAuditUseCase.qrFailAudit("QR 인증 실패", qrCodeResult.dataBody ?: result.text, qrCodeResult.message ?: "")
                 }
                 QRCodeResultType.ERROR -> {
                     showSnackbarMessage("인증에 실패했습니다.")
-                    addAuditUseCase.qrFailAudit(
-                        content = qrCodeResult.dataBody ?: result.text,
-                        desc = "QR 인증 실패",
-                        message = qrCodeResult.message ?: ""
-                    )
+                    addAuditUseCase.qrFailAudit("QR 인증 실패", qrCodeResult.dataBody ?: result.text, qrCodeResult.message ?: "")
                 }
             }
         }
     }
 
-    private suspend fun registerUser(result: String, qrCodeResult: QRCodeResult) {
-
+    private suspend fun verifyQRCode(result: String, qrCodeResult: QRCodeResult) {
         qrCodeResult.kbPassResponse?.let { kbPassResponse ->
             val id = kbPassResponse.id ?: ""
 
             when(val responseUser = getUserUseCase(id)){
                 is Response.Success -> {
-                    if(responseUser.data.pw_hash == kbPassResponse.pw_hash) {
-                        updateUserUseCase(responseUser.data.copy(
-                            device_id = kbPassResponse.device_id,
-                            kb_pass = qrCodeResult.kbPass,
-                            registered_at = Calendar.getInstance().time,
-                            is_registered = true
-                        ))
+                    when(verifyQRCodeUseCase(qrCodeResult, responseUser.data)) {
+                        VerifyQRCodeUseCase.VerifyQRCodeResult.SUCCESS -> {
+                            if(qrCodeResult.type == QRCodeResultType.REGISTER) {
+                                updateUserUseCase(responseUser.data.copy(
+                                    device_id = kbPassResponse.device_id,
+                                    kb_pass = qrCodeResult.kbPass,
+                                    registered_at = Calendar.getInstance().time,
+                                    is_registered = true
+                                ))
 
-                        showSnackbarMessage("사용자 등록에 성공했습니다.")
-                        addAuditUseCase.qrSuccessAudit(
-                            content = result,
-                            desc = "QR 등록 성공",
-                            message = responseUser.data.name
-                        )
+                                showSnackbarMessage("사용자 등록에 성공했습니다.")
+                                addAuditUseCase.qrSuccessAudit("QR 등록 성공", result, responseUser.data.name)
+                            }
+                            else if(qrCodeResult.type == QRCodeResultType.AUTH) {
+                                showSnackbarMessage("인증되었습니다.")
+                                addAuditUseCase.qrSuccessAudit("QR 로그인 성공", result, responseUser.data.name)
+                            }
+                        }
+                        VerifyQRCodeUseCase.VerifyQRCodeResult.ERROR_UNREGISTERED -> {
+                            showSnackbarMessage("QR을 등록하지 않은 사용자입니다. 먼저 QR 등록을 진행해 주세요.")
+                            addAuditUseCase.qrFailAudit("QR 인증 실패", result, "${responseUser.data.name} - QR 미등록")
+                        }
+                        VerifyQRCodeUseCase.VerifyQRCodeResult.ERROR_PASSWORD -> {
+                            showSnackbarMessage("비밀번호가 일치하지 않습니다.")
+                            addAuditUseCase.qrFailAudit("QR 인증 실패", result, "${responseUser.data.name} - 비밀번호 오류")
+                        }
+                        VerifyQRCodeUseCase.VerifyQRCodeResult.ERROR_KB_PASS -> {
+                            showSnackbarMessage("고유키가 일치하지 않습니다.")
+                            addAuditUseCase.qrFailAudit("QR 인증 실패", result, "${responseUser.data.name} - KBPASS 오류")
+                        }
+                        VerifyQRCodeUseCase.VerifyQRCodeResult.ERROR_DEVICE_ID -> {
+                            showSnackbarMessage("단말기 고유값이 일치하지 않습니다. 다시 등록해 주세요.")
+                            addAuditUseCase.qrFailAudit("QR 인증 실패", result, "${responseUser.data.name} - DEVICE ID 오류")
+                        }
+                        else -> {
 
-                    } else {
-                        showSnackbarMessage("비밀번호가 일치하지 않습니다.")
-                        addAuditUseCase.qrFailAudit(
-                            content = result,
-                            desc = "QR 등록 실패",
-                            message = responseUser.data.name
-                        )
+                        }
                     }
                 }
                 else -> {
                     showSnackbarMessage("등록되어있지 않은 사용자입니다.")
-                    addAuditUseCase.qrFailAudit(
-                        content = result,
-                        desc = "QR 등록 실패",
-                        message = id
-                    )
+                    addAuditUseCase.qrFailAudit("QR 인증 실패", result, "${id} - 미등록 사용자")
                 }
             }
         }
-    }
-
-    private fun authUser(result: String, qrCodeResult: QRCodeResult) {
-
     }
 
     fun showSnackbarMessage(message: String) {

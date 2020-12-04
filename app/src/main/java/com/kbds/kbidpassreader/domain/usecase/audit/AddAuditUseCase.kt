@@ -61,7 +61,7 @@ class AddAuditUseCase @Inject constructor(
         )
     }
 
-    suspend fun qrSuccessAudit(desc: String, content: String? = null, message: String = "") {
+    suspend fun qrSuccessAudit(desc: String, content: String, message: String) {
         return kbIdPassRepository.addAudit(
             Audit(
                 title = "QR 인증",
@@ -73,7 +73,7 @@ class AddAuditUseCase @Inject constructor(
         )
     }
 
-    suspend fun qrFailAudit(desc: String, content: String? = null, message: String = "") {
+    suspend fun qrFailAudit(desc: String, content: String, message: String) {
         return kbIdPassRepository.addAudit(
             Audit(
                 title = "QR 인증",
