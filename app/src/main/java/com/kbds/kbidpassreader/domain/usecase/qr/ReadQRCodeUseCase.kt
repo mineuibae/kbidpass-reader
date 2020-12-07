@@ -1,5 +1,6 @@
 package com.kbds.kbidpassreader.domain.usecase.qr
 
+import android.util.Log
 import com.journeyapps.barcodescanner.BarcodeResult
 import com.kbds.kbidpassreader.domain.model.qr.KBPassResponse
 import com.kbds.kbidpassreader.domain.model.qr.QRCodeResponse
@@ -18,6 +19,7 @@ class ReadQRCodeUseCase @Inject constructor(
 ){
     operator fun invoke(barcodeResult: BarcodeResult): QRCodeResult {
         val result = barcodeResult.text
+        Log.d("ReadQRCodeUseCase", "result: $result")
 
         try {
             // 등록

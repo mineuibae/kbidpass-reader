@@ -8,6 +8,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.kbds.kbidpassreader.base.BaseFragment
 import com.kbds.kbidpassreader.databinding.FragmentUsersBinding
+import com.kbds.kbidpassreader.util.EventObserver
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -44,6 +45,11 @@ class UsersFragment : BaseFragment() {
             val action = UsersFragmentDirections.actionUsersFragmentToAddUserFragment()
             findNavController().navigate(action)
         }
+
+        usersViewModel.editUserEvent.observe(viewLifecycleOwner, EventObserver { id ->
+            val action = UsersFragmentDirections.actionUsersFragmentToEditUserFragment(id)
+            findNavController().navigate(action)
+        })
     }
 
     private fun setupListAdapter() {

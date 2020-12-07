@@ -7,10 +7,14 @@ import com.kbds.kbidpassreader.data.Response.Success
 import com.kbds.kbidpassreader.domain.model.user.User
 import com.kbds.kbidpassreader.domain.model.user.UserFilterType
 import com.kbds.kbidpassreader.domain.usecase.user.ObserveUsersUseCase
+import com.kbds.kbidpassreader.util.Event
 
 class UsersViewModel @ViewModelInject constructor(
     private val observeUsersUseCase: ObserveUsersUseCase
 ): ViewModel() {
+
+    private val _editUserEvent = MutableLiveData<Event<String>>()
+    val editUserEvent: LiveData<Event<String>> = _editUserEvent
 
     private var currentFiltering = MutableLiveData<UserFilterType>(
         UserFilterType.ALL_USERS)
@@ -35,6 +39,10 @@ class UsersViewModel @ViewModelInject constructor(
 
     fun loadUsers(filterType: UserFilterType) {
         currentFiltering.value = filterType
+    }
+
+    fun editUser(userId: String) {
+        _editUserEvent.value = Event(userId)
     }
 
     fun refresh() {

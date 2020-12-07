@@ -37,13 +37,14 @@
                 android:transitionName="user_id"
                 app:layout_constraintTop_toBottomOf="@id/title" >
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
                     android:text="@={viewModel.userId}"
                     android:focusableInTouchMode="false"
-                    android:focusable="false" />
+                    android:focusable="false"
+                    android:textColor="@color/warm_grey" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -89,13 +90,14 @@
                 android:transitionName="user_device_id"
                 app:layout_constraintTop_toBottomOf="@id/user_password" >
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
                     android:text="@={viewModel.userDeviceId}"
                     android:focusableInTouchMode="false"
-                    android:focusable="false" />
+                    android:focusable="false"
+                    android:textColor="@color/warm_grey" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -107,13 +109,14 @@
                 android:transitionName="user_kb_pass"
                 app:layout_constraintTop_toBottomOf="@id/user_device_id" >
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
                     android:text="@={viewModel.userKBPass}"
                     android:focusableInTouchMode="false"
-                    android:focusable="false" />
+                    android:focusable="false"
+                    android:textColor="@color/warm_grey" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

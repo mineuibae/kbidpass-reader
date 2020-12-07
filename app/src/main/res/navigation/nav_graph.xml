@@ -6,7 +6,15 @@
     <fragment
         android:id="@+id/editUserFragment"
         android:name="com.kbds.kbidpassreader.presentation.edituser.EditUserFragment"
-        android:label="EditUserFragment" />
+        android:label="EditUserFragment" >
+        <action
+            android:id="@+id/action_editUserFragment_to_usersFragment"
+            app:destination="@id/usersFragment" />
+        <argument
+            android:name="userId"
+            app:argType="string"
+            app:nullable="false" />
+    </fragment>
 
     <fragment
         android:id="@+id/usersFragment"
@@ -15,6 +23,9 @@
         <action
             android:id="@+id/action_usersFragment_to_addUserFragment"
             app:destination="@id/addUserFragment" />
+        <action
+            android:id="@+id/action_usersFragment_to_editUserFragment"
+            app:destination="@id/editUserFragment" />
     </fragment>
 
     <fragment
