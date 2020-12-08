@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kbds.kbidpassreader.data.Response
 import com.kbds.kbidpassreader.domain.model.user.User
-import com.kbds.kbidpassreader.domain.usecase.audit.AddAuditUseCase
+import com.kbds.kbidpassreader.domain.usecase.log.AddLogUseCase
 import com.kbds.kbidpassreader.domain.usecase.user.AddUserUseCase
 import com.kbds.kbidpassreader.domain.usecase.user.GetUserUseCase
 import com.kbds.kbidpassreader.util.Event
@@ -17,7 +17,7 @@ import java.util.*
 class AddUserViewModel @ViewModelInject constructor(
     private val getUserUseCase: GetUserUseCase,
     private val addUserUseCase: AddUserUseCase,
-    private val addAuditUseCase: AddAuditUseCase
+    private val addLogUseCase: AddLogUseCase
 ): ViewModel() {
 
     val userId = MutableLiveData<String>()
@@ -42,7 +42,7 @@ class AddUserViewModel @ViewModelInject constructor(
                 when(responseUser){
                     is Response.Success -> {
                         showSnackbarMessage("이미 등록되어있는 사용자입니다.")
-                        addAuditUseCase.addUserFailAudit(responseUser.data, "기등록 사용자")
+                        addLogUseCase.addUserFailLog(responseUser.data, "기등록 사용자")
                     }
 
                     else -> {
@@ -56,10 +56,10 @@ class AddUserViewModel @ViewModelInject constructor(
                                 )
 
                             addUserUseCase(user)
-                            addAuditUseCase.addUserSuccessAudit(user)
+                            addLogUseCase.addUserSuccessLog(user)
 
                         } catch (e: Exception) {
-                            addAuditUseCase.addUserFailAudit(message = e.message)
+                            addLogUseCase.addUserFailLog(message = e.message)
                         }
 
                         _taskUpdatedEvent.value = Event(Unit)

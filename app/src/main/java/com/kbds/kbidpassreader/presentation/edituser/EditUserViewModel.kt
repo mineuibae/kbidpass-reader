@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kbds.kbidpassreader.data.Response
-import com.kbds.kbidpassreader.domain.usecase.audit.AddAuditUseCase
+import com.kbds.kbidpassreader.domain.usecase.log.AddLogUseCase
 import com.kbds.kbidpassreader.domain.usecase.user.GetUserUseCase
 import com.kbds.kbidpassreader.domain.usecase.user.UpdateUserUseCase
 import com.kbds.kbidpassreader.util.Event
@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 class EditUserViewModel @ViewModelInject constructor(
     private val getUserUseCase: GetUserUseCase,
     private val updateUserUseCase: UpdateUserUseCase,
-    private val addAuditUseCase: AddAuditUseCase
+    private val addLogUseCase: AddLogUseCase
 ): ViewModel() {
 
     val userId = MutableLiveData<String>()
@@ -58,16 +58,16 @@ class EditUserViewModel @ViewModelInject constructor(
                                 pw_hash = password
                             )
                             updateUserUseCase(updateUser)
-                            addAuditUseCase.updateUserSuccessAudit(updateUser)
+                            addLogUseCase.updateUserSuccessLog(updateUser)
 
                         } else {
                             showSnackbarMessage("등록되어있지 않은 사용자입니다.")
-                            addAuditUseCase.addUserFailAudit(message = "$id - 미등록 사용자")
+                            addLogUseCase.addUserFailLog(message = "$id - 미등록 사용자")
                         }
                     }
 
                 } catch (e: Exception) {
-                    addAuditUseCase.updateUserFailAudit(message = e.message)
+                    addLogUseCase.updateUserFailLog(message = e.message)
                 }
 
                 _taskUpdatedEvent.value = Event(Unit)

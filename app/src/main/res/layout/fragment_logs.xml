@@ -6,22 +6,22 @@
     <data>
         <variable
             name="viewModel"
-            type="com.kbds.kbidpassreader.presentation.audits.AuditsViewModel" />
+            type="com.kbds.kbidpassreader.presentation.logs.LogsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.audits.AuditsFragment">
+        tools:context=".presentation.logs.LogsFragment">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/audits_list"
+            android:id="@+id/logs_list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:auditsItems="@{viewModel.audits}"
+            app:logsItems="@{viewModel.logs}"
             app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/audit_item" />
+            tools:listitem="@layout/log_item" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

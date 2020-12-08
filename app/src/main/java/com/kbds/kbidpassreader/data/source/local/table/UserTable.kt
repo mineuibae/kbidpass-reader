@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import java.util.*
 
 @Entity(tableName = "users")
-data class User (
+data class UserTable (
     @PrimaryKey
     @ColumnInfo(name = "id")
     var id: String,

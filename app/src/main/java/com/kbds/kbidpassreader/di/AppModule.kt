@@ -34,7 +34,7 @@ object AppModule {
         @IoDispatcher ioDispatcher: CoroutineDispatcher
     ): KBIdPassDataSource {
         return KBIdPassLocalDataSource(
-            database.userDao(), database.auditDao(), ioDispatcher
+            database.userDao(), database.logDao(), ioDispatcher
         )
     }
 

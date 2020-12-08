@@ -1,4 +1,4 @@
-package com.kbds.kbidpassreader.presentation.audits
+package com.kbds.kbidpassreader.presentation.logs
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,23 +7,23 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.kbds.kbidpassreader.base.BaseFragment
-import com.kbds.kbidpassreader.databinding.FragmentAuditsBinding
+import com.kbds.kbidpassreader.databinding.FragmentLogsBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AuditsFragment : BaseFragment() {
+class LogsFragment : BaseFragment() {
 
-    private lateinit var binding: FragmentAuditsBinding
-    private val auditsViewModel by activityViewModels<AuditsViewModel>()
-    private lateinit var listAdapter: AuditsAdapter
+    private lateinit var binding: FragmentLogsBinding
+    private val logsViewModel by activityViewModels<LogsViewModel>()
+    private lateinit var listAdapter: LogsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentAuditsBinding.inflate(inflater, container, false).apply {
-            this.viewModel = auditsViewModel
+        binding = FragmentLogsBinding.inflate(inflater, container, false).apply {
+            this.viewModel = logsViewModel
         }
 
         return binding.root
@@ -41,8 +41,8 @@ class AuditsFragment : BaseFragment() {
     private fun setupListAdapter() {
         val viewModel = binding.viewModel
         if(viewModel != null) {
-            listAdapter = AuditsAdapter(viewModel)
-            binding.auditsList.apply {
+            listAdapter = LogsAdapter(viewModel)
+            binding.logsList.apply {
                 adapter = listAdapter
                 addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
             }

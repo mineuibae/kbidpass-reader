@@ -3,7 +3,7 @@ package com.kbds.kbidpassreader.data.source
 import androidx.annotation.NonNull
 import androidx.lifecycle.LiveData
 import com.kbds.kbidpassreader.data.Response
-import com.kbds.kbidpassreader.domain.model.audit.Audit
+import com.kbds.kbidpassreader.domain.model.log.LogEntity
 import com.kbds.kbidpassreader.domain.model.user.User
 
 interface KBIdPassRepository {
@@ -31,19 +31,19 @@ interface KBIdPassRepository {
     suspend fun refreshUser(@NonNull id: String)
 
 
-    fun observeAudits() : LiveData<Response<List<Audit>>>
+    fun observeLogs() : LiveData<Response<List<LogEntity>>>
 
-    fun observeAudit(@NonNull id: Int) : LiveData<Response<Audit>>
+    fun observeLog(@NonNull id: Int) : LiveData<Response<LogEntity>>
 
-    fun observeAuditsFromUser(@NonNull user_id: String) : LiveData<Response<List<Audit>>>
+    fun observeLogsFromUser(@NonNull user_id: String) : LiveData<Response<List<LogEntity>>>
 
-    suspend fun getAudits() : Response<List<Audit>>
+    suspend fun getLogs() : Response<List<LogEntity>>
 
-    suspend fun getAudit(@NonNull id: Int) : Response<Audit>
+    suspend fun getLog(@NonNull id: Int) : Response<LogEntity>
 
-    suspend fun getAuditsFromUser(@NonNull user_id: String) : Response<List<Audit>>
+    suspend fun getLogsFromUser(@NonNull user_id: String) : Response<List<LogEntity>>
 
-    suspend fun addAudit(@NonNull audit: Audit)
+    suspend fun addLog(@NonNull log: LogEntity)
 
-    suspend fun refreshAudits()
+    suspend fun refreshLogs()
 }

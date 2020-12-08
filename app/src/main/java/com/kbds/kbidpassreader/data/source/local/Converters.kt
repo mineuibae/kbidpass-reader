@@ -1,7 +1,7 @@
 package com.kbds.kbidpassreader.data.source.local
 
 import androidx.room.TypeConverter
-import com.kbds.kbidpassreader.domain.model.audit.AuditType
+import com.kbds.kbidpassreader.domain.model.log.LogType
 import java.util.*
 
 class Converters {
@@ -16,12 +16,12 @@ class Converters {
     }
 
     @TypeConverter
-    fun fromAuditType(value: AuditType?): String? {
+    fun fromLogType(value: LogType?): String? {
         return value?.name
     }
 
     @TypeConverter
-    fun toAuditType(type: String?): AuditType? {
-        return type?.let{ enumValueOf<AuditType>(it) }
+    fun toLogType(type: String?): LogType? {
+        return type?.let{ enumValueOf<LogType>(it) }
     }
 }

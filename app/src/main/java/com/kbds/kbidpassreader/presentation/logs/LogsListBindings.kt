@@ -13,24 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.kbds.kbidpassreader.presentation.audits
+package com.kbds.kbidpassreader.presentation.logs
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.kbds.kbidpassreader.domain.model.audit.Audit
+import com.kbds.kbidpassreader.domain.model.log.LogEntity
 import com.kbds.kbidpassreader.extension.toFormatted
 
-@BindingAdapter("app:auditsItems")
-fun setAuditsItems(listView: RecyclerView, items: List<Audit>?) {
+@BindingAdapter("app:logsItems")
+fun setLogsItems(listView: RecyclerView, items: List<LogEntity>?) {
     items?.let {
-        (listView.adapter as AuditsAdapter).submitList(items)
+        (listView.adapter as LogsAdapter).submitList(items)
     }
 }
 
 @BindingAdapter("loggedDate")
-fun setLoggedDate(textView: TextView, audit: Audit) {
+fun setLoggedDate(textView: TextView, log: LogEntity) {
     with(textView) {
-        text = audit.logged_at?.toFormatted("yyyy.MM.dd HH:mm:ss")
+        text = log.logged_at?.toFormatted("yyyy.MM.dd HH:mm:ss")
     }
 }

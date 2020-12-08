@@ -6,17 +6,18 @@ import com.kbds.kbidpassreader.data.Response
 import com.kbds.kbidpassreader.data.Response.Error
 import com.kbds.kbidpassreader.data.Response.Success
 import com.kbds.kbidpassreader.data.source.KBIdPassDataSource
-import com.kbds.kbidpassreader.data.source.local.dao.AuditDao
+import com.kbds.kbidpassreader.data.source.local.dao.LogDao
 import com.kbds.kbidpassreader.data.source.local.dao.UserDao
-import com.kbds.kbidpassreader.domain.model.audit.Audit
+import com.kbds.kbidpassreader.domain.model.log.LogEntity
 import com.kbds.kbidpassreader.domain.model.user.User
+import com.kbds.kbidpassreader.extension.map
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class KBIdPassLocalDataSource internal constructor(
     private val userDao: UserDao,
-    private val auditDao: AuditDao,
+    private val logDao: LogDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): KBIdPassDataSource {
 
@@ -87,59 +88,76 @@ class KBIdPassLocalDataSource internal constructor(
     }
 
 
-    override fun observeAudits(): LiveData<Response<List<Audit>>> =
-        auditDao.observeAudits().map {
-            Success(it)
+    override fun observeLogs(): LiveData<Response<List<LogEntity>>> =
+        logDao.observeLogs().map { logTables ->
+            Success(
+                logTables.map { logTable ->
+                    logTable.map()
+                }
+            )
         }
 
-    override fun observeAudit(id: Int): LiveData<Response<Audit>> =
-        auditDao.observeAudit(id).map {
-            Success(it)
+    override fun observeLog(id: Int): LiveData<Response<LogEntity>> =
+        logDao.observeLog(id).map { logTable ->
+            Success(logTable.map())
         }
 
-    override fun observeAuditsFromUser(user_id: String): LiveData<Response<List<Audit>>> =
-        auditDao.observeAuditsFromUser(user_id).map {
-            Success(it)
+    override fun observeLogsFromUser(user_id: String): LiveData<Response<List<LogEntity>>> =
+        logDao.observeLogsFromUser(user_id).map {logTables ->
+            Success(
+                logTables.map { logTable ->
+                    logTable.map()
+                }
+            )
         }
 
-    override suspend fun getAudits(): Response<List<Audit>> =
+    override suspend fun getLogs(): Response<List<LogEntity>> =
         withContext(ioDispatcher) {
             return@withContext try {
-                Success(auditDao.getAudits())
+                Success(
+                    logDao.getLogs().map { logTable ->
+                        logTable.map()
+                    }
+                )
+
             } catch (e: Exception) {
                 Error(e)
             }
         }
 
-    override suspend fun getAudit(id: Int): Response<Audit> =
+    override suspend fun getLog(id: Int): Response<LogEntity> =
         withContext(ioDispatcher) {
             try {
-                val audit = auditDao.getAudit(id)
-                if(audit != null) {
-                    return@withContext Success(audit)
+                val log = logDao.getLog(id)?.map()
+                if(log != null) {
+                    return@withContext Success(log)
                 } else {
-                    return@withContext Error(Exception("Audit not found"))
+                    return@withContext Error(Exception("Log not found"))
                 }
             } catch (e: Exception) {
                 return@withContext Error(e)
             }
         }
 
-    override suspend fun getAuditsFromUser(user_id: String): Response<List<Audit>> =
+    override suspend fun getLogsFromUser(user_id: String): Response<List<LogEntity>> =
         withContext(ioDispatcher) {
             return@withContext try {
-                Success(auditDao.getAuditsFromUser(user_id))
+                Success(
+                    logDao.getLogsFromUser(user_id).map { logTable ->
+                        logTable.map()
+                    }
+                )
             } catch (e: Exception) {
                 Error(e)
             }
         }
 
-    override suspend fun addAudit(audit: Audit) =
+    override suspend fun addLog(log: LogEntity) =
         withContext(ioDispatcher) {
-            auditDao.addAudit(audit)
+            logDao.addLog(log.map())
         }
 
-    override suspend fun refreshAudits() {
+    override suspend fun refreshLogs() {
         // NO-OP
     }
 }

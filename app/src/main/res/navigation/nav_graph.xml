@@ -49,9 +49,9 @@
         tools:layout="@layout/fragment_qr_code" />
 
     <fragment
-        android:id="@+id/auditsFragment"
-        android:name="com.kbds.kbidpassreader.presentation.audits.AuditsFragment"
-        android:label="AuditsFragment"
-        tools:layout="@layout/fragment_audits" />
+        android:id="@+id/logsFragment"
+        android:name="com.kbds.kbidpassreader.presentation.logs.LogsFragment"
+        android:label="LogsFragment"
+        tools:layout="@layout/fragment_logs" />
 
 </navigation>

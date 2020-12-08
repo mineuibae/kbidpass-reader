@@ -2,7 +2,7 @@ package com.kbds.kbidpassreader.data.source
 
 import androidx.lifecycle.LiveData
 import com.kbds.kbidpassreader.data.Response
-import com.kbds.kbidpassreader.domain.model.audit.Audit
+import com.kbds.kbidpassreader.domain.model.log.LogEntity
 import com.kbds.kbidpassreader.domain.model.user.User
 import kotlinx.coroutines.*
 
@@ -67,37 +67,37 @@ class KBIdPassDefaultRepository(
         kbIdPassLocalDataSource.refreshUser(id)
     }
 
-    override fun observeAudits(): LiveData<Response<List<Audit>>> {
-        return kbIdPassLocalDataSource.observeAudits()
+    override fun observeLogs(): LiveData<Response<List<LogEntity>>> {
+        return kbIdPassLocalDataSource.observeLogs()
     }
 
-    override fun observeAudit(id: Int): LiveData<Response<Audit>> {
-        return kbIdPassLocalDataSource.observeAudit(id)
+    override fun observeLog(id: Int): LiveData<Response<LogEntity>> {
+        return kbIdPassLocalDataSource.observeLog(id)
     }
 
-    override fun observeAuditsFromUser(user_id: String): LiveData<Response<List<Audit>>> {
-        return kbIdPassLocalDataSource.observeAuditsFromUser(user_id)
+    override fun observeLogsFromUser(user_id: String): LiveData<Response<List<LogEntity>>> {
+        return kbIdPassLocalDataSource.observeLogsFromUser(user_id)
     }
 
-    override suspend fun getAudits(): Response<List<Audit>> {
-        return kbIdPassLocalDataSource.getAudits()
+    override suspend fun getLogs(): Response<List<LogEntity>> {
+        return kbIdPassLocalDataSource.getLogs()
     }
 
-    override suspend fun getAudit(id: Int): Response<Audit> {
-        return kbIdPassLocalDataSource.getAudit(id)
+    override suspend fun getLog(id: Int): Response<LogEntity> {
+        return kbIdPassLocalDataSource.getLog(id)
     }
 
-    override suspend fun getAuditsFromUser(user_id: String): Response<List<Audit>> {
-        return kbIdPassLocalDataSource.getAuditsFromUser(user_id)
+    override suspend fun getLogsFromUser(user_id: String): Response<List<LogEntity>> {
+        return kbIdPassLocalDataSource.getLogsFromUser(user_id)
     }
 
-    override suspend fun addAudit(audit: Audit) {
+    override suspend fun addLog(log: LogEntity) {
         coroutineScope {
-            launch { kbIdPassLocalDataSource.addAudit(audit) }
+            launch { kbIdPassLocalDataSource.addLog(log) }
         }
     }
 
-    override suspend fun refreshAudits() {
-        kbIdPassLocalDataSource.refreshAudits()
+    override suspend fun refreshLogs() {
+        kbIdPassLocalDataSource.refreshLogs()
     }
 }
