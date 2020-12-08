@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.kbds.kbidpassreader.data.Response
 import com.kbds.kbidpassreader.data.source.KBIdPassRepository
-import com.kbds.kbidpassreader.domain.model.user.User
+import com.kbds.kbidpassreader.domain.model.user.UserEntity
 import com.kbds.kbidpassreader.domain.model.user.UserFilterType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -15,7 +15,7 @@ class ObserveUsersUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(
         currentFiltering: UserFilterType = UserFilterType.ALL_USERS
-    ): LiveData<Response<List<User>>> = withContext(Dispatchers.Default) {
+    ): LiveData<Response<List<UserEntity>>> = withContext(Dispatchers.Default) {
         kbIdPassRepository.observeUsers().map { response ->
             when {
                 (response is Response.Success) && (currentFiltering != UserFilterType.ALL_USERS) -> {

@@ -2,12 +2,12 @@ package com.kbds.kbidpassreader.domain.usecase.qr
 
 import com.kbds.kbidpassreader.domain.model.qr.QRCodeResult
 import com.kbds.kbidpassreader.domain.model.qr.QRCodeResultType
-import com.kbds.kbidpassreader.domain.model.user.User
+import com.kbds.kbidpassreader.domain.model.user.UserEntity
 import javax.inject.Inject
 
 class VerifyQRCodeUseCase @Inject constructor() {
 
-    operator fun invoke(qrCodeResult: QRCodeResult, user: User) : VerifyQRCodeResult {
+    operator fun invoke(qrCodeResult: QRCodeResult, user: UserEntity) : VerifyQRCodeResult {
         when(qrCodeResult.type) {
             QRCodeResultType.REGISTER -> {
                 return if(verifyPassword(qrCodeResult, user)) VerifyQRCodeResult.SUCCESS else VerifyQRCodeResult.ERROR_PASSWORD
@@ -27,16 +27,16 @@ class VerifyQRCodeUseCase @Inject constructor() {
         }
     }
 
-    private fun isRegistered(user: User) =
+    private fun isRegistered(user: UserEntity) =
         (user.is_registered)
 
-    private fun verifyPassword(qrCodeResult: QRCodeResult, user: User) =
+    private fun verifyPassword(qrCodeResult: QRCodeResult, user: UserEntity) =
         (user.pw_hash == qrCodeResult.kbPassResponse?.pw_hash) && user.pw_hash.isNotEmpty()
 
-    private fun verifyKBPass(qrCodeResult: QRCodeResult, user: User) =
+    private fun verifyKBPass(qrCodeResult: QRCodeResult, user: UserEntity) =
         (user.kb_pass == qrCodeResult.kbPass) && !user.kb_pass.isNullOrEmpty()
 
-    private fun verifyDeviceId(qrCodeResult: QRCodeResult, user: User) =
+    private fun verifyDeviceId(qrCodeResult: QRCodeResult, user: UserEntity) =
         (user.device_id == qrCodeResult.kbPassResponse?.device_id) && !user.device_id.isNullOrEmpty()
 
     enum class VerifyQRCodeResult {

@@ -3,7 +3,7 @@ package com.kbds.kbidpassreader.data.source
 import androidx.lifecycle.LiveData
 import com.kbds.kbidpassreader.data.Response
 import com.kbds.kbidpassreader.domain.model.log.LogEntity
-import com.kbds.kbidpassreader.domain.model.user.User
+import com.kbds.kbidpassreader.domain.model.user.UserEntity
 import kotlinx.coroutines.*
 
 class KBIdPassDefaultRepository(
@@ -11,23 +11,23 @@ class KBIdPassDefaultRepository(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : KBIdPassRepository {
 
-    override fun observeUsers(): LiveData<Response<List<User>>> {
+    override fun observeUsers(): LiveData<Response<List<UserEntity>>> {
         return kbIdPassLocalDataSource.observeUsers()
     }
 
-    override fun observeUser(id: String): LiveData<Response<User>> {
+    override fun observeUser(id: String): LiveData<Response<UserEntity>> {
         return kbIdPassLocalDataSource.observeUser(id)
     }
 
-    override suspend fun getUsers(): Response<List<User>> {
+    override suspend fun getUsers(): Response<List<UserEntity>> {
         return kbIdPassLocalDataSource.getUsers()
     }
 
-    override suspend fun getUser(id: String): Response<User> {
+    override suspend fun getUser(id: String): Response<UserEntity> {
         return kbIdPassLocalDataSource.getUser(id)
     }
 
-    override suspend fun addUser(user: User) {
+    override suspend fun addUser(user: UserEntity) {
         coroutineScope {
             launch { kbIdPassLocalDataSource.addUser(user) }
         }
@@ -39,7 +39,7 @@ class KBIdPassDefaultRepository(
         }
     }
 
-    override suspend fun updateUser(user: User) {
+    override suspend fun updateUser(user: UserEntity) {
         withContext(ioDispatcher) {
             coroutineScope {
                 launch { kbIdPassLocalDataSource.updateUser(user) }
@@ -47,13 +47,13 @@ class KBIdPassDefaultRepository(
         }
     }
 
-    override suspend fun registerUser(user: User) {
+    override suspend fun registerUser(user: UserEntity) {
         coroutineScope {
             launch { kbIdPassLocalDataSource.registerUser(user) }
         }
     }
 
-    override suspend fun deRegisterUser(user: User) {
+    override suspend fun deRegisterUser(user: UserEntity) {
         coroutineScope {
             launch { kbIdPassLocalDataSource.deRegisterUser(user) }
         }

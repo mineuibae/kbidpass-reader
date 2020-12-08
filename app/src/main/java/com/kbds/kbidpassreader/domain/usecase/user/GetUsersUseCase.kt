@@ -2,7 +2,7 @@ package com.kbds.kbidpassreader.domain.usecase.user
 
 import com.kbds.kbidpassreader.data.Response
 import com.kbds.kbidpassreader.data.source.KBIdPassRepository
-import com.kbds.kbidpassreader.domain.model.user.User
+import com.kbds.kbidpassreader.domain.model.user.UserEntity
 import com.kbds.kbidpassreader.domain.model.user.UserFilterType
 import javax.inject.Inject
 
@@ -11,7 +11,7 @@ class GetUsersUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(
         currentFiltering: UserFilterType = UserFilterType.ALL_USERS
-    ) : Response<List<User>> {
+    ) : Response<List<UserEntity>> {
 
         val users = kbIdPassRepository.getUsers()
 

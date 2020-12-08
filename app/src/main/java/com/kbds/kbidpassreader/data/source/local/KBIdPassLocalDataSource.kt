@@ -9,7 +9,7 @@ import com.kbds.kbidpassreader.data.source.KBIdPassDataSource
 import com.kbds.kbidpassreader.data.source.local.dao.LogDao
 import com.kbds.kbidpassreader.data.source.local.dao.UserDao
 import com.kbds.kbidpassreader.domain.model.log.LogEntity
-import com.kbds.kbidpassreader.domain.model.user.User
+import com.kbds.kbidpassreader.domain.model.user.UserEntity
 import com.kbds.kbidpassreader.extension.map
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -19,32 +19,40 @@ class KBIdPassLocalDataSource internal constructor(
     private val userDao: UserDao,
     private val logDao: LogDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-): KBIdPassDataSource {
+) : KBIdPassDataSource {
 
-    override fun observeUsers(): LiveData<Response<List<User>>> =
-        userDao.observeUsers().map {
-            Success(it)
+    override fun observeUsers(): LiveData<Response<List<UserEntity>>> =
+        userDao.observeUsers().map { userTables ->
+            Success(
+                userTables.map { userTable ->
+                    userTable.map()
+                }
+            )
         }
 
-    override fun observeUser(id: String): LiveData<Response<User>> =
-        userDao.observeUser(id).map {
-            Success(it)
+    override fun observeUser(id: String): LiveData<Response<UserEntity>> =
+        userDao.observeUser(id).map { userTable ->
+            Success(userTable.map())
         }
 
-    override suspend fun getUsers(): Response<List<User>> =
+    override suspend fun getUsers(): Response<List<UserEntity>> =
         withContext(ioDispatcher) {
             return@withContext try {
-                Success(userDao.getUsers())
+                Success(
+                    userDao.getUsers().map { userTable ->
+                        userTable.map()
+                    }
+                )
             } catch (e: Exception) {
                 Error(e)
             }
         }
 
-    override suspend fun getUser(id: String): Response<User> =
+    override suspend fun getUser(id: String): Response<UserEntity> =
         withContext(ioDispatcher) {
             try {
-                val user = userDao.getUser(id)
-                if(user != null) {
+                val user = userDao.getUser(id)?.map()
+                if (user != null) {
                     return@withContext Success(user)
                 } else {
                     return@withContext Error(Exception("User not found"))
@@ -54,9 +62,9 @@ class KBIdPassLocalDataSource internal constructor(
             }
         }
 
-    override suspend fun addUser(user: User) =
+    override suspend fun addUser(user: UserEntity) =
         withContext(ioDispatcher) {
-            userDao.addUser(user)
+            userDao.addUser(user.map())
         }
 
     override suspend fun deleteUser(id: String) =
@@ -64,17 +72,17 @@ class KBIdPassLocalDataSource internal constructor(
             userDao.deleteUser(id)
         }
 
-    override suspend fun updateUser(user: User) =
+    override suspend fun updateUser(user: UserEntity) =
         withContext(ioDispatcher) {
-            userDao.updateUser(user)
+            userDao.updateUser(user.map())
         }
 
-    override suspend fun registerUser(user: User) =
+    override suspend fun registerUser(user: UserEntity) =
         withContext(ioDispatcher) {
             userDao.updateRegistered(user.id, true)
         }
 
-    override suspend fun deRegisterUser(user: User) =
+    override suspend fun deRegisterUser(user: UserEntity) =
         withContext(ioDispatcher) {
             userDao.updateRegistered(user.id, false)
         }
@@ -103,7 +111,7 @@ class KBIdPassLocalDataSource internal constructor(
         }
 
     override fun observeLogsFromUser(user_id: String): LiveData<Response<List<LogEntity>>> =
-        logDao.observeLogsFromUser(user_id).map {logTables ->
+        logDao.observeLogsFromUser(user_id).map { logTables ->
             Success(
                 logTables.map { logTable ->
                     logTable.map()
@@ -129,7 +137,7 @@ class KBIdPassLocalDataSource internal constructor(
         withContext(ioDispatcher) {
             try {
                 val log = logDao.getLog(id)?.map()
-                if(log != null) {
+                if (log != null) {
                     return@withContext Success(log)
                 } else {
                     return@withContext Error(Exception("Log not found"))

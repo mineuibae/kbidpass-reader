@@ -3,7 +3,7 @@ package com.kbds.kbidpassreader.domain.usecase.log
 import com.kbds.kbidpassreader.data.source.KBIdPassRepository
 import com.kbds.kbidpassreader.domain.model.log.LogEntity
 import com.kbds.kbidpassreader.domain.model.log.LogType
-import com.kbds.kbidpassreader.domain.model.user.User
+import com.kbds.kbidpassreader.domain.model.user.UserEntity
 import java.util.*
 import javax.inject.Inject
 
@@ -15,7 +15,7 @@ class AddLogUseCase @Inject constructor(
     }
 
     suspend operator fun invoke(
-        user: User? = null,
+        user: UserEntity? = null,
         title: String,
         content: String? = null,
         desc: String,
@@ -35,7 +35,7 @@ class AddLogUseCase @Inject constructor(
         )
     }
 
-    suspend fun addUserSuccessLog(user: User) {
+    suspend fun addUserSuccessLog(user: UserEntity) {
         return kbIdPassRepository.addLog(
             LogEntity(
                 user_id = user.id,
@@ -48,7 +48,7 @@ class AddLogUseCase @Inject constructor(
         )
     }
 
-    suspend fun addUserFailLog(user: User? = null, message: String?) {
+    suspend fun addUserFailLog(user: UserEntity? = null, message: String?) {
         return kbIdPassRepository.addLog(
             LogEntity(
                 user_id = user?.id,
@@ -61,7 +61,7 @@ class AddLogUseCase @Inject constructor(
         )
     }
 
-    suspend fun updateUserSuccessLog(user: User) {
+    suspend fun updateUserSuccessLog(user: UserEntity) {
         return kbIdPassRepository.addLog(
             LogEntity(
                 user_id = user.id,
@@ -74,7 +74,7 @@ class AddLogUseCase @Inject constructor(
         )
     }
 
-    suspend fun updateUserFailLog(user: User? = null, message: String?) {
+    suspend fun updateUserFailLog(user: UserEntity? = null, message: String?) {
         return kbIdPassRepository.addLog(
             LogEntity(
                 user_id = user?.id,

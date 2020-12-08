@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kbds.kbidpassreader.R
 import com.kbds.kbidpassreader.databinding.UserItemBinding
-import com.kbds.kbidpassreader.domain.model.user.User
+import com.kbds.kbidpassreader.domain.model.user.UserEntity
 
 class UsersAdapter(private val viewModel: UsersViewModel) :
-    ListAdapter<User, UsersAdapter.UserViewHolder>(UserDiffCallback()) {
+    ListAdapter<UserEntity, UsersAdapter.UserViewHolder>(UserDiffCallback()) {
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val item = getItem(position)
@@ -24,7 +24,7 @@ class UsersAdapter(private val viewModel: UsersViewModel) :
 
     class UserViewHolder private constructor(val binding: UserItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(viewModel: UsersViewModel, user: User) {
+        fun bind(viewModel: UsersViewModel, user: UserEntity) {
             binding.viewModel = viewModel
             binding.user = user
             if(user.is_registered) {
@@ -46,12 +46,12 @@ class UsersAdapter(private val viewModel: UsersViewModel) :
     }
 }
 
-class UserDiffCallback : DiffUtil.ItemCallback<User>() {
-    override fun areItemsTheSame(oldItem: User, newItem: User): Boolean {
+class UserDiffCallback : DiffUtil.ItemCallback<UserEntity>() {
+    override fun areItemsTheSame(oldItem: UserEntity, newItem: UserEntity): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: User, newItem: User): Boolean {
+    override fun areContentsTheSame(oldItem: UserEntity, newItem: UserEntity): Boolean {
         return oldItem == newItem
     }
 }

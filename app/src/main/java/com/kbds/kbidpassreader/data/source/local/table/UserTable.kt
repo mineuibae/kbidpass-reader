@@ -18,17 +18,17 @@ data class UserTable (
     var pw_hash: String,
 
     @ColumnInfo(name = "device_id")
-    var device_id: String? = null,
+    var device_id: String?,
 
     @ColumnInfo(name = "kb_pass")
-    var kb_pass: String? = null,
+    var kb_pass: String?,
 
     @ColumnInfo(name = "created_at")
-    var created_at: Date? = null,
+    var created_at: Date?,
 
     @ColumnInfo(name = "registered_at")
-    var registered_at: Date? = null,
+    var registered_at: Date?,
 
     @ColumnInfo(name = "is_registered")
-    var is_registered: Boolean = false
+    var is_registered: Boolean
 )

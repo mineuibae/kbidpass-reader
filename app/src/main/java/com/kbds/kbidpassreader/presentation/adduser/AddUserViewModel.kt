@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kbds.kbidpassreader.data.Response
-import com.kbds.kbidpassreader.domain.model.user.User
+import com.kbds.kbidpassreader.domain.model.user.UserEntity
 import com.kbds.kbidpassreader.domain.usecase.log.AddLogUseCase
 import com.kbds.kbidpassreader.domain.usecase.user.AddUserUseCase
 import com.kbds.kbidpassreader.domain.usecase.user.GetUserUseCase
@@ -48,7 +48,7 @@ class AddUserViewModel @ViewModelInject constructor(
                     else -> {
                         try {
                             val user =
-                                User(
+                                UserEntity(
                                     id = id,
                                     name = name,
                                     pw_hash = password,

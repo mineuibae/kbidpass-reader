@@ -19,18 +19,18 @@ import android.view.View
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.kbds.kbidpassreader.domain.model.user.User
+import com.kbds.kbidpassreader.domain.model.user.UserEntity
 import com.kbds.kbidpassreader.extension.toFormatted
 
 @BindingAdapter("app:userItems")
-fun setUserItems(listView: RecyclerView, items: List<User>?) {
+fun setUserItems(listView: RecyclerView, items: List<UserEntity>?) {
     items?.let {
         (listView.adapter as UsersAdapter).submitList(items)
     }
 }
 
 @BindingAdapter("createdDate")
-fun setCreatedDate(textView: TextView, user: User) {
+fun setCreatedDate(textView: TextView, user: UserEntity) {
     with(textView) {
         user.created_at.let { date ->
             if(date != null) {
@@ -44,7 +44,7 @@ fun setCreatedDate(textView: TextView, user: User) {
 }
 
 @BindingAdapter("registeredDate")
-fun setRegisteredDate(textView: TextView, user: User) {
+fun setRegisteredDate(textView: TextView, user: UserEntity) {
     with(textView) {
         user.registered_at.let { date ->
             if(date != null) {
