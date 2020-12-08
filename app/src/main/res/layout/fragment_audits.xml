@@ -20,7 +20,8 @@
             android:layout_height="0dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:auditsItems="@{viewModel.audits}"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/audit_item" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -96,7 +96,7 @@ class QRCodeViewModel @ViewModelInject constructor(
                             }
                         }
                         VerifyQRCodeUseCase.VerifyQRCodeResult.ERROR_UNREGISTERED -> {
-                            showToolTipMessage("QR을 등록하지 않은 사용자입니다. 먼저 QR 등록을 진행해 주세요.")
+                            showToolTipMessage("QR을 등록하지 않은 사용자입니다.\n먼저 QR 등록을 진행해 주세요.")
                             addAuditUseCase.qrFailAudit("QR 인증 실패", result, "${responseUser.data.name} - QR 미등록")
                         }
                         VerifyQRCodeUseCase.VerifyQRCodeResult.ERROR_PASSWORD -> {
@@ -108,7 +108,7 @@ class QRCodeViewModel @ViewModelInject constructor(
                             addAuditUseCase.qrFailAudit("QR 인증 실패", result, "${responseUser.data.name} - KBPASS 오류")
                         }
                         VerifyQRCodeUseCase.VerifyQRCodeResult.ERROR_DEVICE_ID -> {
-                            showToolTipMessage("단말기 고유값이 일치하지 않습니다. 다시 등록해 주세요.")
+                            showToolTipMessage("단말기 고유값이 일치하지 않습니다.\n다시 등록해 주세요.")
                             addAuditUseCase.qrFailAudit("QR 인증 실패", result, "${responseUser.data.name} - DEVICE ID 오류")
                         }
                         else -> {

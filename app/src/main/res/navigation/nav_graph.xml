@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
     app:startDestination="@id/qrCodeFragment">
 
     <fragment
         android:id="@+id/editUserFragment"
         android:name="com.kbds.kbidpassreader.presentation.edituser.EditUserFragment"
-        android:label="EditUserFragment" >
+        android:label="EditUserFragment"
+        tools:layout="@layout/fragment_edit_user">
         <action
             android:id="@+id/action_editUserFragment_to_usersFragment"
             app:destination="@id/usersFragment" />
@@ -19,7 +22,8 @@
     <fragment
         android:id="@+id/usersFragment"
         android:name="com.kbds.kbidpassreader.presentation.users.UsersFragment"
-        android:label="UsersFragment" >
+        android:label="UsersFragment"
+        tools:layout="@layout/fragment_users">
         <action
             android:id="@+id/action_usersFragment_to_addUserFragment"
             app:destination="@id/addUserFragment" />
@@ -31,7 +35,8 @@
     <fragment
         android:id="@+id/addUserFragment"
         android:name="com.kbds.kbidpassreader.presentation.adduser.AddUserFragment"
-        android:label="AddUserFragment" >
+        android:label="AddUserFragment"
+        tools:layout="@layout/fragment_add_user" >
         <action
             android:id="@+id/action_addUserFragment_to_usersFragment"
             app:destination="@id/usersFragment" />
@@ -40,11 +45,13 @@
     <fragment
         android:id="@+id/qrCodeFragment"
         android:name="com.kbds.kbidpassreader.presentation.qr.QRCodeFragment"
-        android:label="QRCodeFragment" />
+        android:label="QRCodeFragment"
+        tools:layout="@layout/fragment_qr_code" />
 
     <fragment
         android:id="@+id/auditsFragment"
         android:name="com.kbds.kbidpassreader.presentation.audits.AuditsFragment"
-        android:label="AuditsFragment" />
+        android:label="AuditsFragment"
+        tools:layout="@layout/fragment_audits" />
 
 </navigation>
