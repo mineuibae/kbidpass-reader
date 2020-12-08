@@ -58,9 +58,9 @@ class KBIdPassLocalDataSource internal constructor(
             userDao.addUser(user)
         }
 
-    override suspend fun deleteUser(user: User) =
+    override suspend fun deleteUser(id: String) =
         withContext(ioDispatcher) {
-            userDao.deleteUser(user.id)
+            userDao.deleteUser(id)
         }
 
     override suspend fun updateUser(user: User) =

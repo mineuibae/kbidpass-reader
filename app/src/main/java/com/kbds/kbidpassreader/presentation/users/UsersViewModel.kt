@@ -6,11 +6,14 @@ import com.kbds.kbidpassreader.data.Response
 import com.kbds.kbidpassreader.data.Response.Success
 import com.kbds.kbidpassreader.domain.model.user.User
 import com.kbds.kbidpassreader.domain.model.user.UserFilterType
+import com.kbds.kbidpassreader.domain.usecase.user.DeleteUserUseCase
 import com.kbds.kbidpassreader.domain.usecase.user.ObserveUsersUseCase
 import com.kbds.kbidpassreader.util.Event
+import kotlinx.coroutines.launch
 
 class UsersViewModel @ViewModelInject constructor(
-    private val observeUsersUseCase: ObserveUsersUseCase
+    private val observeUsersUseCase: ObserveUsersUseCase,
+    private val deleteUserUseCase: DeleteUserUseCase
 ): ViewModel() {
 
     private val _editUserEvent = MutableLiveData<Event<String>>()
@@ -43,6 +46,12 @@ class UsersViewModel @ViewModelInject constructor(
 
     fun editUser(userId: String) {
         _editUserEvent.value = Event(userId)
+    }
+
+    fun deleteUser(userId: String) {
+        viewModelScope.launch {
+            deleteUserUseCase(userId)
+        }
     }
 
     fun refresh() {

@@ -6,9 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.kbds.kbidpassreader.R
+import com.kbds.kbidpassreader.base.BaseActivity
 import com.kbds.kbidpassreader.base.BaseFragment
 import com.kbds.kbidpassreader.databinding.FragmentUsersBinding
 import com.kbds.kbidpassreader.util.EventObserver
+import com.kbds.kbidpassreader.util.recyclerview.RecyclerViewTouchListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -57,6 +60,30 @@ class UsersFragment : BaseFragment() {
         if (viewModel != null) {
             listAdapter = UsersAdapter(viewModel)
             binding.usersList.adapter = listAdapter
+
+            val touchListener = RecyclerViewTouchListener(requireActivity() as BaseActivity, binding.usersList)
+            touchListener.apply {
+                setOnRowClickListener(object : RecyclerViewTouchListener.OnRowClickListener {
+                    override fun onRowClicked(position: Int) {
+
+                    }
+                })
+
+                setOnOptionClickListener(object : RecyclerViewTouchListener.OnOptionClickListener {
+                    override fun onOptionClicked(viewId: Int, position: Int) {
+                        when(viewId) {
+                            R.id.recyclerview_delete_button -> {
+                                //binding.usersList
+                            }
+                        }
+                    }
+                })
+
+                setViewIds(R.id.recyclerview_foreground, R.id.recyclerview_background)
+                setOptionViewIds(R.id.recyclerview_delete_button)
+            }
+
+            binding.usersList.addOnItemTouchListener(touchListener)
         }
     }
 }

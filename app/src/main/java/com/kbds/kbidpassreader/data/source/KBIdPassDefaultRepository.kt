@@ -33,9 +33,9 @@ class KBIdPassDefaultRepository(
         }
     }
 
-    override suspend fun deleteUser(user: User) {
+    override suspend fun deleteUser(id: String) {
         coroutineScope {
-            launch { kbIdPassLocalDataSource.deleteUser(user) }
+            launch { kbIdPassLocalDataSource.deleteUser(id) }
         }
     }
 

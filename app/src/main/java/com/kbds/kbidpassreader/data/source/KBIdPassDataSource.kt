@@ -18,7 +18,7 @@ interface KBIdPassDataSource {
 
     suspend fun addUser(@NonNull user: User)
 
-    suspend fun deleteUser(@NonNull user: User)
+    suspend fun deleteUser(@NonNull id: String)
 
     suspend fun updateUser(@NonNull user: User)
 
