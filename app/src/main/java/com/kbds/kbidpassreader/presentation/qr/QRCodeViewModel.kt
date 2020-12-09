@@ -90,7 +90,8 @@ class QRCodeViewModel @ViewModelInject constructor(
                                     is_registered = true
                                 ))
 
-                                showToolTipMessage("사용자 등록에 성공했습니다.")
+                                showToolTipMessage("등록되었습니다.")
+                                playTTSMessage("등록되었습니다.")
                                 addLogUseCase.qrSuccessLog("QR 등록 성공", result, responseUser.data.name)
                             }
                             else if(qrCodeResult.type == QRCodeResultType.AUTH) {
