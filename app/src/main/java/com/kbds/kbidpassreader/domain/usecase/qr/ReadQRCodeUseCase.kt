@@ -99,6 +99,6 @@ class ReadQRCodeUseCase @Inject constructor(
     }
 
     companion object {
-        const val QR_TIME_OUT = 15
+        const val QR_TIME_OUT = 15 * 1000
     }
 }
