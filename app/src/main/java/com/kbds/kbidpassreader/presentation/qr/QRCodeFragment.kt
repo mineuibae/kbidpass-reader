@@ -3,6 +3,7 @@ package com.kbds.kbidpassreader.presentation.qr
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,11 +23,13 @@ import com.kbds.kbidpassreader.view.ToolTip
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.*
 
 @AndroidEntryPoint
 class QRCodeFragment : BaseFragment() {
 
     private lateinit var binding: FragmentQrCodeBinding
+    lateinit var tts: TextToSpeech
     private val qrCodeViewModel by viewModels<QRCodeViewModel>()
 
     override fun onCreateView(
@@ -78,12 +81,26 @@ class QRCodeFragment : BaseFragment() {
         binding.flashToggleButton.setOnCheckedChangeListener(flashToggleListener)
 
         qrCodeViewModel.permissionGranted.observe(viewLifecycleOwner, Observer {isGranted ->
+            if(isGranted) {
+                tts = TextToSpeech(requireContext()) {
+                    if(it != TextToSpeech.ERROR) {
+                        tts.language = Locale.KOREAN
+                    }
+                }
+            }
+
             binding.barcodeView.apply {
                 if(isGranted) {
                     decodeContinuous(barcodeCallback)
                 } else {
                     pause()
                 }
+            }
+        })
+
+        qrCodeViewModel.ttsText.observe(viewLifecycleOwner, Observer { event ->
+            event.getContentIfNotHandled()?.let { ttsText ->
+                tts?.speak(ttsText, TextToSpeech.QUEUE_FLUSH, null, null)
             }
         })
     }

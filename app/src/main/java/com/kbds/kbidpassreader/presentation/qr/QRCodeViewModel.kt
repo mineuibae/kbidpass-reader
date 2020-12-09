@@ -39,6 +39,9 @@ class QRCodeViewModel @ViewModelInject constructor(
     private val _toolTipText = MutableLiveData<Event<String>>()
     val toolTipText: LiveData<Event<String>> = _toolTipText
 
+    private val _ttsText = MutableLiveData<Event<String>>()
+    val ttsText: LiveData<Event<String>> = _ttsText
+
     fun barcodeFinish(result: BarcodeResult) {
         if(barcodeLoading.value == true) {
             return
@@ -92,6 +95,7 @@ class QRCodeViewModel @ViewModelInject constructor(
                             }
                             else if(qrCodeResult.type == QRCodeResultType.AUTH) {
                                 showToolTipMessage("인증되었습니다.")
+                                playTTSMessage("인증되었습니다.")
                                 addLogUseCase.qrSuccessLog("QR 로그인 성공", result, responseUser.data.name)
                             }
                         }
@@ -122,6 +126,10 @@ class QRCodeViewModel @ViewModelInject constructor(
                 }
             }
         }
+    }
+
+    fun playTTSMessage(message: String) {
+        _ttsText.value = Event(message)
     }
 
     fun showToolTipMessage(message: String) {
