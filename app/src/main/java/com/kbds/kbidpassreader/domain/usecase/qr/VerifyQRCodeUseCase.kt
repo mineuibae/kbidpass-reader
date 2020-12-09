@@ -3,6 +3,7 @@ package com.kbds.kbidpassreader.domain.usecase.qr
 import com.kbds.kbidpassreader.domain.model.qr.QRCodeResult
 import com.kbds.kbidpassreader.domain.model.qr.QRCodeResultType
 import com.kbds.kbidpassreader.domain.model.user.UserEntity
+import com.kbds.kbidpassreader.extension.digestSha256
 import javax.inject.Inject
 
 class VerifyQRCodeUseCase @Inject constructor() {
@@ -31,7 +32,7 @@ class VerifyQRCodeUseCase @Inject constructor() {
         (user.is_registered)
 
     private fun verifyPassword(qrCodeResult: QRCodeResult, user: UserEntity) =
-        (user.pw_hash == qrCodeResult.kbPassResponse?.pw_hash) && user.pw_hash.isNotEmpty()
+        (user.pw_hash == qrCodeResult.kbPassResponse?.pw_hash?.digestSha256()) && user.pw_hash.isNotEmpty()
 
     private fun verifyKBPass(qrCodeResult: QRCodeResult, user: UserEntity) =
         (user.kb_pass == qrCodeResult.kbPass) && !user.kb_pass.isNullOrEmpty()

@@ -10,6 +10,7 @@ import com.kbds.kbidpassreader.domain.model.user.UserEntity
 import com.kbds.kbidpassreader.domain.usecase.log.AddLogUseCase
 import com.kbds.kbidpassreader.domain.usecase.user.AddUserUseCase
 import com.kbds.kbidpassreader.domain.usecase.user.GetUserUseCase
+import com.kbds.kbidpassreader.extension.digestSha256
 import com.kbds.kbidpassreader.util.Event
 import kotlinx.coroutines.launch
 import java.util.*
@@ -51,7 +52,7 @@ class AddUserViewModel @ViewModelInject constructor(
                                 UserEntity(
                                     id = id,
                                     name = name,
-                                    pw_hash = password,
+                                    pw_hash = password.digestSha256(),
                                     created_at = Calendar.getInstance().time
                                 )
 

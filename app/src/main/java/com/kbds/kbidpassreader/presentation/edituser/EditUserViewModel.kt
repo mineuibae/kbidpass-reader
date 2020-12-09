@@ -9,6 +9,7 @@ import com.kbds.kbidpassreader.data.Response
 import com.kbds.kbidpassreader.domain.usecase.log.AddLogUseCase
 import com.kbds.kbidpassreader.domain.usecase.user.GetUserUseCase
 import com.kbds.kbidpassreader.domain.usecase.user.UpdateUserUseCase
+import com.kbds.kbidpassreader.extension.digestSha256
 import com.kbds.kbidpassreader.util.Event
 import kotlinx.coroutines.launch
 
@@ -55,7 +56,7 @@ class EditUserViewModel @ViewModelInject constructor(
                         if(user is Response.Success) {
                             val updateUser = user.data.copy(
                                 name = name,
-                                pw_hash = password
+                                pw_hash = password.digestSha256()
                             )
                             updateUserUseCase(updateUser)
                             addLogUseCase.updateUserSuccessLog(updateUser)
