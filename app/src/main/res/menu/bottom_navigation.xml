@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/logsFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_log"
+        android:title="로그"/>
+
+    <item
+        android:id="@+id/qrCodeFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_camera"
+        android:title="QR"/>
+
+    <item
+        android:id="@+id/usersFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_user_registered"
+        android:title="사용자"/>
+</menu>
